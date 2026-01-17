@@ -1,0 +1,62 @@
+// Package range provides a Range (slider) form component for Pico CSS.
+package rangecomp
+
+import (
+	"fmt"
+)
+
+// Props defines the configuration for the Range component.
+type Props struct {
+	Name     string           // Input name attribute
+	ID       string           // Input id attribute
+	Label    string           // Label text
+	Min      float64          // Minimum value
+	Max      float64          // Maximum value
+	Step     float64          // Step increment
+	Value    float64          // Current value
+	Disabled bool             // Whether the input is disabled
+	Class    string           // Additional CSS classes
+	Attrs    templ.Attributes // Additional HTML attributes
+}
+
+// formatFloat formats a float64 for HTML attribute output.
+func formatFloat(f float64) string {
+	return fmt.Sprintf("%g", f)
+}
+
+// Range renders a slider input component following Pico CSS conventions.
+templ Range(props Props) {
+	<label>
+		if props.Label != "" {
+			{ props.Label }
+		}
+		<input
+			type="range"
+			if props.Name != "" {
+				name={ props.Name }
+			}
+			if props.ID != "" {
+				id={ props.ID }
+			}
+			if props.Min != 0 || props.Max != 0 {
+				min={ formatFloat(props.Min) }
+			}
+			if props.Max != 0 {
+				max={ formatFloat(props.Max) }
+			}
+			if props.Step != 0 {
+				step={ formatFloat(props.Step) }
+			}
+			if props.Value != 0 {
+				value={ formatFloat(props.Value) }
+			}
+			if props.Disabled {
+				disabled
+			}
+			if props.Class != "" {
+				class={ props.Class }
+			}
+			{ props.Attrs... }
+		/>
+	</label>
+}
