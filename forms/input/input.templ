@@ -1,0 +1,91 @@
+// Package input provides an Input templ component for form text inputs with Pico CSS support.
+package input
+
+// Props contains the configuration options for the Input component.
+type Props struct {
+	Name        string           // Input name attribute
+	ID          string           // Input id (defaults to Name if empty)
+	Type        string           // text, email, password, number, tel, url, search, date, time, etc.
+	Label       string           // Label text (renders <label> wrapper if set)
+	Placeholder string
+	Value       string
+	Required    bool
+	Disabled    bool
+	ReadOnly    bool
+	Invalid     bool             // Adds aria-invalid="true"
+	HelperText  string           // Renders <small> below input
+	Class       string           // Additional CSS classes
+	Attrs       templ.Attributes // Arbitrary additional attributes
+}
+
+// inputID returns the ID to use for the input, defaulting to Name if ID is empty.
+func (p Props) inputID() string {
+	if p.ID != "" {
+		return p.ID
+	}
+	return p.Name
+}
+
+// helperID returns the ID for the helper text element.
+func (p Props) helperID() string {
+	return p.inputID() + "-helper"
+}
+
+// inputType returns the input type, defaulting to "text".
+func (p Props) inputType() string {
+	if p.Type != "" {
+		return p.Type
+	}
+	return "text"
+}
+
+// Input renders a form input element with optional label and helper text.
+templ Input(props Props) {
+	if props.Label != "" {
+		<label for={ props.inputID() }>
+			{ props.Label }
+			@inputElement(props)
+			if props.HelperText != "" {
+				<small id={ props.helperID() }>{ props.HelperText }</small>
+			}
+		</label>
+	} else {
+		@inputElement(props)
+		if props.HelperText != "" {
+			<small id={ props.helperID() }>{ props.HelperText }</small>
+		}
+	}
+}
+
+templ inputElement(props Props) {
+	<input
+		type={ props.inputType() }
+		name={ props.Name }
+		id={ props.inputID() }
+		if props.Placeholder != "" {
+			placeholder={ props.Placeholder }
+		}
+		if props.Value != "" {
+			value={ props.Value }
+		}
+		if props.Required {
+			required
+		}
+		if props.Disabled {
+			disabled
+		}
+		if props.ReadOnly {
+			readonly
+		}
+		if props.Invalid {
+			aria-invalid="true"
+		}
+		if props.HelperText != "" {
+			aria-describedby={ props.helperID() }
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	/>
+}
