@@ -24,7 +24,7 @@ repos:
 
       - id: go-vet
         name: go vet
-        entry: flox activate -- go vet
+        entry: flox activate -- go vet ./...
         language: system
         types: [go]
         pass_filenames: false
