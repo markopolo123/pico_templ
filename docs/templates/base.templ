@@ -2,6 +2,9 @@ package templates
 
 import "github.com/markopolo123/pico_templ/head"
 
+// BasePath is the URL base path for GitHub Pages deployment
+const BasePath = "/pico_templ"
+
 // NavItem represents a navigation link
 type NavItem struct {
 	Title string
@@ -16,11 +19,11 @@ type BaseProps struct {
 
 // Navigation items for the sidebar
 var navItems = []NavItem{
-	{Title: "Home", Path: "/"},
-	{Title: "Components", Path: "/components.html"},
-	{Title: "Forms", Path: "/forms.html"},
-	{Title: "Layout", Path: "/layout.html"},
-	{Title: "Content", Path: "/content.html"},
+	{Title: "Home", Path: "/pico_templ/"},
+	{Title: "Components", Path: "/pico_templ/components.html"},
+	{Title: "Forms", Path: "/pico_templ/forms.html"},
+	{Title: "Layout", Path: "/pico_templ/layout.html"},
+	{Title: "Content", Path: "/pico_templ/content.html"},
 }
 
 // isCurrentPage checks if the given path is the current page
