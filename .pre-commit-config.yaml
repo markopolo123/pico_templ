@@ -38,14 +38,6 @@ repos:
         types: [file]
         files: '\.templ$'
 
-      - id: templ-generate
-        name: templ generate
-        entry: flox activate -- templ generate
-        language: system
-        pass_filenames: false
-        types: [file]
-        files: '\.templ$'
-
       - id: go-test
         name: go test
         entry: flox activate -- go test ./...
