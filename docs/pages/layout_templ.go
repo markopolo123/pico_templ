@@ -246,7 +246,7 @@ func Layout() templ.Component {
 		})
 		templ_7745c5c3_Err = templates.Base(templates.BaseProps{
 			Title:       "Layout",
-			CurrentPath: "/layout",
+			CurrentPath: "/layout.html",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
