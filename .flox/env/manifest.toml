@@ -39,6 +39,10 @@ on-activate = """
   # Point GOENV to Flox environment cache
   export GOENV="$FLOX_ENV_CACHE/goenv"
 
+  # Set GOBIN and add to PATH for go-installed tools
+  export GOBIN="$FLOX_ENV_CACHE/gobin"
+  export PATH="$GOBIN:$PATH"
+
   # Install Go dependencies
   go get .
 
@@ -51,12 +55,11 @@ on-activate = """
 ## ... sourced by _your shell_ when you run 'flox activate'.
 ## -------------------------------------------------------------------
 [profile]
-# common = '''
-#   gum style \
-#   --foreground 212 --border-foreground 212 --border double \
-#   --align center --width 50 --margin "1 2" --padding "2 4" \
-#     $INTRO_MESSAGE
-# '''
+common = '''
+  # Add go-installed tools to PATH
+  export GOBIN="$FLOX_ENV_CACHE/gobin"
+  export PATH="$GOBIN:$PATH"
+'''
 ## Shell-specific customizations such as setting aliases go here:
 # bash = ...
 # zsh  = ...
