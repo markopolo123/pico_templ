@@ -12,12 +12,12 @@ const (
 
 // Props defines the properties for the Button component.
 type Props struct {
-	Text     string           // Button text content
-	Type     string           // button, submit, reset (default: button)
-	Variant  string           // empty=primary, secondary, contrast
-	Outline  bool             // Add .outline class
-	Disabled bool             // Disabled state
-	Class    string           // Additional CSS classes
+	Text     string // Button text content
+	Type     string // button, submit, reset (default: button)
+	Variant  string // empty=primary, secondary, contrast
+	Outline  bool   // Add .outline class
+	Disabled bool   // Disabled state
+	Class    string // Additional CSS classes
 	// HTMX bindings
 	HxGet     string
 	HxPost    string
