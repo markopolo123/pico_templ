@@ -3,21 +3,21 @@ package link
 
 // Props contains properties for the Link component.
 type Props struct {
-	Href        string           // URL to link to
-	Target      string           // _blank, _self, _parent, _top
-	Rel         string           // Link relationship (noopener, noreferrer, etc.)
-	Title       string           // Tooltip title
-	Download    string           // Download attribute (filename or empty string for true)
-	Class       string           // Additional CSS classes
-	Secondary   bool             // Use secondary color styling
-	Contrast    bool             // Use contrast color styling
-	HxGet       string           // HTMX hx-get attribute
-	HxPost      string           // HTMX hx-post attribute
-	HxTarget    string           // HTMX hx-target attribute
-	HxSwap      string           // HTMX hx-swap attribute
-	HxTrigger   string           // HTMX hx-trigger attribute
-	HxPushURL   string           // HTMX hx-push-url attribute
-	Attrs       templ.Attributes // Arbitrary additional attributes
+	Href      string           // URL to link to
+	Target    string           // _blank, _self, _parent, _top
+	Rel       string           // Link relationship (noopener, noreferrer, etc.)
+	Title     string           // Tooltip title
+	Download  string           // Download attribute (filename or empty string for true)
+	Class     string           // Additional CSS classes
+	Secondary bool             // Use secondary color styling
+	Contrast  bool             // Use contrast color styling
+	HxGet     string           // HTMX hx-get attribute
+	HxPost    string           // HTMX hx-post attribute
+	HxTarget  string           // HTMX hx-target attribute
+	HxSwap    string           // HTMX hx-swap attribute
+	HxTrigger string           // HTMX hx-trigger attribute
+	HxPushURL string           // HTMX hx-push-url attribute
+	Attrs     templ.Attributes // Arbitrary additional attributes
 }
 
 // classes builds a space-separated class string.

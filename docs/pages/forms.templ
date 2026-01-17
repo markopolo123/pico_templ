@@ -22,7 +22,6 @@ templ Forms() {
 			Pico CSS styling. Each component supports validation states, accessibility attributes,
 			and HTMX integration where applicable.
 		</p>
-
 		<!-- Input Component -->
 		<section>
 			<h2>Input</h2>
@@ -30,7 +29,6 @@ templ Forms() {
 				The Input component renders a text input with optional label and helper text.
 				It supports various input types and validation states.
 			</p>
-
 			<h3>Basic Examples</h3>
 			<article>
 				@input.Input(input.Props{
@@ -46,7 +44,6 @@ templ Forms() {
 					HelperText:  "We'll never share your email.",
 				})
 			</article>
-
 			<h3>Input Types</h3>
 			<article>
 				<div class="grid">
@@ -85,7 +82,6 @@ templ Forms() {
 					</div>
 				</div>
 			</article>
-
 			<h3>Validation States</h3>
 			<article>
 				<div class="grid">
@@ -108,14 +104,13 @@ templ Forms() {
 					</div>
 				</div>
 				@input.Input(input.Props{
-					Name:        "disabled-input",
-					Label:       "Disabled Input",
-					Value:       "Cannot edit",
-					Disabled:    true,
-					HelperText:  "This field is disabled",
+					Name:       "disabled-input",
+					Label:      "Disabled Input",
+					Value:      "Cannot edit",
+					Disabled:   true,
+					HelperText: "This field is disabled",
 				})
 			</article>
-
 			<h3>Code Example</h3>
 			<pre>
 				<code>
@@ -148,7 +143,6 @@ type Props struct {
 				</code>
 			</pre>
 		</section>
-
 		<!-- Textarea Component -->
 		<section>
 			<h2>Textarea</h2>
@@ -156,7 +150,6 @@ type Props struct {
 				The Textarea component renders a multi-line text input with support for labels,
 				helper text, row configuration, and HTMX attributes.
 			</p>
-
 			<h3>Basic Examples</h3>
 			<article>
 				@textarea.Textarea(textarea.Props{
@@ -173,16 +166,15 @@ type Props struct {
 					HelperText:  "Maximum 500 characters",
 				})
 			</article>
-
 			<h3>Validation States</h3>
 			<article>
 				<div class="grid">
 					<div>
 						@textarea.Textarea(textarea.Props{
-							Name:       "valid-textarea",
-							Label:      "Valid Textarea",
-							Value:      "This content is valid.",
-							Rows:       3,
+							Name:  "valid-textarea",
+							Label: "Valid Textarea",
+							Value: "This content is valid.",
+							Rows:  3,
 						})
 					</div>
 					<div>
@@ -204,7 +196,6 @@ type Props struct {
 					Disabled: true,
 				})
 			</article>
-
 			<h3>Code Example</h3>
 			<pre>
 				<code>
@@ -237,7 +228,6 @@ type Props struct {
 				</code>
 			</pre>
 		</section>
-
 		<!-- Select Component -->
 		<section>
 			<h2>Select</h2>
@@ -245,7 +235,6 @@ type Props struct {
 				The Select component renders a dropdown with support for flat options,
 				option groups, placeholders, and validation states.
 			</p>
-
 			<h3>Basic Examples</h3>
 			<article>
 				@selectfield.Select(selectfield.Props{
@@ -272,7 +261,6 @@ type Props struct {
 					},
 				})
 			</article>
-
 			<h3>Option Groups</h3>
 			<article>
 				@selectfield.Select(selectfield.Props{
@@ -300,7 +288,6 @@ type Props struct {
 					},
 				})
 			</article>
-
 			<h3>Validation States</h3>
 			<article>
 				<div class="grid">
@@ -317,11 +304,11 @@ type Props struct {
 					</div>
 					<div>
 						@selectfield.Select(selectfield.Props{
-							Name:       "invalid-select",
-							ID:         "invalid-select",
-							Label:      "Invalid Select",
-							Invalid:    true,
-							HelperText: "Please select an option",
+							Name:        "invalid-select",
+							ID:          "invalid-select",
+							Label:       "Invalid Select",
+							Invalid:     true,
+							HelperText:  "Please select an option",
 							Placeholder: "Select...",
 							Options: []selectfield.Option{
 								{Value: "opt1", Label: "Option 1"},
@@ -340,7 +327,6 @@ type Props struct {
 					},
 				})
 			</article>
-
 			<h3>Code Example</h3>
 			<pre>
 				<code>
@@ -386,7 +372,6 @@ type OptGroup struct {
 				</code>
 			</pre>
 		</section>
-
 		<!-- Checkbox Component -->
 		<section>
 			<h2>Checkbox</h2>
@@ -394,7 +379,6 @@ type OptGroup struct {
 				The Checkbox component renders a checkbox input with an associated label.
 				It supports checked, disabled, and invalid states.
 			</p>
-
 			<h3>Basic Examples</h3>
 			<article>
 				@checkbox.Checkbox(checkbox.Props{
@@ -411,7 +395,6 @@ type OptGroup struct {
 					Checked: true,
 				})
 			</article>
-
 			<h3>States</h3>
 			<article>
 				<div class="grid">
@@ -457,7 +440,6 @@ type OptGroup struct {
 					Invalid: true,
 				})
 			</article>
-
 			<h3>Code Example</h3>
 			<pre>
 				<code>
@@ -484,7 +466,6 @@ type Props struct {
 				</code>
 			</pre>
 		</section>
-
 		<!-- Radio Component -->
 		<section>
 			<h2>Radio</h2>
@@ -492,7 +473,6 @@ type Props struct {
 				The Radio component renders radio button inputs. Use individual Radio components
 				or the RadioGroup component for multiple related options.
 			</p>
-
 			<h3>Basic Examples</h3>
 			<article>
 				<fieldset>
@@ -518,7 +498,6 @@ type Props struct {
 					})
 				</fieldset>
 			</article>
-
 			<h3>Radio Group</h3>
 			<article>
 				<legend>Plan Selection</legend>
@@ -531,7 +510,6 @@ type Props struct {
 					},
 				})
 			</article>
-
 			<h3>States</h3>
 			<article>
 				<div class="grid">
@@ -592,7 +570,6 @@ type Props struct {
 					})
 				</fieldset>
 			</article>
-
 			<h3>Code Example</h3>
 			<pre>
 				<code>
@@ -636,7 +613,6 @@ type GroupProps struct {
 				</code>
 			</pre>
 		</section>
-
 		<!-- Switch Component -->
 		<section>
 			<h2>Switch</h2>
@@ -644,7 +620,6 @@ type GroupProps struct {
 				The Switch component renders a toggle switch using Pico CSS's switch pattern.
 				It's implemented as a checkbox with <code>role="switch"</code>.
 			</p>
-
 			<h3>Basic Examples</h3>
 			<article>
 				@switch_.Switch(switch_.Props{
@@ -659,7 +634,6 @@ type GroupProps struct {
 					Checked: true,
 				})
 			</article>
-
 			<h3>States</h3>
 			<article>
 				<div class="grid">
@@ -699,7 +673,6 @@ type GroupProps struct {
 					</div>
 				</div>
 			</article>
-
 			<h3>Code Example</h3>
 			<pre>
 				<code>
@@ -724,7 +697,6 @@ type Props struct {
 				</code>
 			</pre>
 		</section>
-
 		<!-- Range Component -->
 		<section>
 			<h2>Range</h2>
@@ -732,7 +704,6 @@ type Props struct {
 				The Range component renders a slider input for selecting numeric values within a range.
 				It supports min, max, step, and initial value configuration.
 			</p>
-
 			<h3>Basic Examples</h3>
 			<article>
 				@rangecomp.Range(rangecomp.Props{
@@ -753,7 +724,6 @@ type Props struct {
 					Step:  5,
 				})
 			</article>
-
 			<h3>Different Ranges</h3>
 			<article>
 				@rangecomp.Range(rangecomp.Props{
@@ -774,7 +744,6 @@ type Props struct {
 					Value: 0.5,
 				})
 			</article>
-
 			<h3>States</h3>
 			<article>
 				@rangecomp.Range(rangecomp.Props{
@@ -787,7 +756,6 @@ type Props struct {
 					Disabled: true,
 				})
 			</article>
-
 			<h3>Code Example</h3>
 			<pre>
 				<code>
@@ -818,18 +786,15 @@ type Props struct {
 				</code>
 			</pre>
 		</section>
-
 		<!-- Complete Form Example -->
 		<section>
 			<h2>Complete Form Example</h2>
 			<p>
 				Here's an example combining multiple form components into a complete form.
 			</p>
-
 			<article>
 				<form>
 					<h3>User Registration</h3>
-
 					<div class="grid">
 						<div>
 							@input.Input(input.Props{
@@ -848,7 +813,6 @@ type Props struct {
 							})
 						</div>
 					</div>
-
 					@input.Input(input.Props{
 						Name:        "reg-email",
 						Type:        "email",
@@ -857,7 +821,6 @@ type Props struct {
 						Required:    true,
 						HelperText:  "We'll never share your email with anyone else.",
 					})
-
 					@input.Input(input.Props{
 						Name:        "reg-password",
 						Type:        "password",
@@ -866,7 +829,6 @@ type Props struct {
 						Required:    true,
 						HelperText:  "Must be at least 8 characters.",
 					})
-
 					@selectfield.Select(selectfield.Props{
 						Name:        "reg-country",
 						ID:          "reg-country",
@@ -882,7 +844,6 @@ type Props struct {
 							{Value: "fr", Label: "France"},
 						},
 					})
-
 					@textarea.Textarea(textarea.Props{
 						Name:        "reg-bio",
 						Label:       "Bio",
@@ -890,7 +851,6 @@ type Props struct {
 						Rows:        3,
 						HelperText:  "Optional. Maximum 500 characters.",
 					})
-
 					<fieldset>
 						<legend>Notification Preferences</legend>
 						@checkbox.Checkbox(checkbox.Props{
@@ -905,7 +865,6 @@ type Props struct {
 							Label: "SMS notifications",
 						})
 					</fieldset>
-
 					<fieldset>
 						<legend>Account Type</legend>
 						@radio.RadioGroup(radio.GroupProps{
@@ -917,13 +876,11 @@ type Props struct {
 							},
 						})
 					</fieldset>
-
 					@switch_.Switch(switch_.Props{
 						Name:  "reg-marketing",
 						ID:    "reg-marketing",
 						Label: "Receive marketing emails",
 					})
-
 					@rangecomp.Range(rangecomp.Props{
 						Name:  "experience",
 						ID:    "experience",
@@ -933,17 +890,14 @@ type Props struct {
 						Value: 5,
 						Step:  1,
 					})
-
 					@checkbox.Checkbox(checkbox.Props{
 						Name:  "reg-terms",
 						ID:    "reg-terms",
 						Label: "I agree to the terms and conditions",
 					})
-
 					<button type="submit">Create Account</button>
 				</form>
 			</article>
-
 			<h3>Form Code Example</h3>
 			<pre>
 				<code>

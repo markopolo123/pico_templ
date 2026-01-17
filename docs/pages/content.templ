@@ -1,11 +1,11 @@
 package pages
 
 import (
-	"github.com/markopolo123/pico_templ/docs/templates"
-	"github.com/markopolo123/pico_templ/content/typography"
-	"github.com/markopolo123/pico_templ/content/table"
 	"github.com/markopolo123/pico_templ/content/link"
 	"github.com/markopolo123/pico_templ/content/loading"
+	"github.com/markopolo123/pico_templ/content/table"
+	"github.com/markopolo123/pico_templ/content/typography"
+	"github.com/markopolo123/pico_templ/docs/templates"
 )
 
 templ contentStyles() {
@@ -106,13 +106,17 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@typography.H1(typography.HeadingProps{}) {
+				<pre>
+					<code>
+						{ `@typography.H1(typography.HeadingProps{}) {
     Heading 1
 }
 @typography.H2(typography.HeadingProps{}) {
     Heading 2
 }
-// ... H3, H4, H5, H6` }</code></pre>
+// ... H3, H4, H5, H6` }
+					</code>
+				</pre>
 			</div>
 			<h3>Text Elements</h3>
 			<p>Various text styling components for inline content.</p>
@@ -124,7 +128,9 @@ templ Content() {
 				<p>The <abbr title="HyperText Markup Language">HTML</abbr> abbreviation shows a tooltip on hover.</p>
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@typography.P(typography.ParagraphProps{}) {
+				<pre>
+					<code>
+						{ `@typography.P(typography.ParagraphProps{}) {
     This is a paragraph with
     @typography.Strong(typography.TextProps{}) { strong text }
 }
@@ -132,7 +138,9 @@ templ Content() {
 @typography.Mark(typography.TextProps{}) { highlighted }
 @typography.Kbd(typography.TextProps{}) { Ctrl }
 @typography.Code(typography.TextProps{}) { inline code }
-@typography.Abbr("Full Title", typography.TextProps{}) { ABBR }` }</code></pre>
+@typography.Abbr("Full Title", typography.TextProps{}) { ABBR }` }
+					</code>
+				</pre>
 			</div>
 			<h3>Blockquote</h3>
 			<div class="example-box">
@@ -144,12 +152,16 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@typography.Blockquote(typography.BlockquoteProps{Cite: "https://example.com"}) {
+				<pre>
+					<code>
+						{ `@typography.Blockquote(typography.BlockquoteProps{Cite: "https://example.com"}) {
     "The best way to predict the future is to invent it."
     <footer>
         <cite>Alan Kay</cite>
     </footer>
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>Preformatted Text</h3>
 			<div class="example-box">
@@ -162,11 +174,15 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@typography.Pre(typography.TextProps{}) {
+				<pre>
+					<code>
+						{ `@typography.Pre(typography.TextProps{}) {
     @typography.Code(typography.TextProps{}) {
         { "func main() { ... }" }
     }
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>HeadingProps</h3>
 			<table class="props-table">
@@ -274,7 +290,9 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@table.Table(table.Props{}) {
+				<pre>
+					<code>
+						{ `@table.Table(table.Props{}) {
     @table.THead(table.HeadProps{}) {
         @table.TR(table.RowProps{}) {
             @table.TH(table.HeaderCellProps{Scope: "col"}) { Name }
@@ -285,7 +303,9 @@ templ Content() {
             @table.TD(table.CellProps{}) { Alice Johnson }
         }
     }
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>Striped Table</h3>
 			<p>Use the Striped prop for alternating row colors.</p>
@@ -392,9 +412,13 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@table.Table(table.Props{Striped: true}) {
+				<pre>
+					<code>
+						{ `@table.Table(table.Props{Striped: true}) {
     // Table content...
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>Table Props</h3>
 			<table class="props-table">
@@ -473,13 +497,17 @@ templ Content() {
 				</div>
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@link.Link(link.Props{Href: "/page"}) {
+				<pre>
+					<code>
+						{ `@link.Link(link.Props{Href: "/page"}) {
     Default Link
 }
 
 @link.Link(link.Props{Href: "/page", Secondary: true}) {
     Secondary Link
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>External Links</h3>
 			<p>External links automatically add target blank and rel noopener noreferrer for security.</p>
@@ -489,9 +517,13 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@link.ExternalLink(link.Props{Href: "https://github.com/markopolo123/pico_templ"}) {
+				<pre>
+					<code>
+						{ `@link.ExternalLink(link.Props{Href: "https://github.com/markopolo123/pico_templ"}) {
     View on GitHub (opens in new tab)
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>Button Links</h3>
 			<p>Links styled as buttons using role button.</p>
@@ -509,9 +541,13 @@ templ Content() {
 				</div>
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@link.ButtonLink(link.Props{Href: "/action"}) {
+				<pre>
+					<code>
+						{ `@link.ButtonLink(link.Props{Href: "/action"}) {
     Primary Button Link
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>HTMX Links</h3>
 			<p>Links with HTMX attributes for dynamic content loading.</p>
@@ -526,14 +562,18 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@link.Link(link.Props{
+				<pre>
+					<code>
+						{ `@link.Link(link.Props{
     Href:     "#",
     HxGet:    "/api/content",
     HxTarget: "#content",
     HxSwap:   "innerHTML",
 }) {
     Load Content via HTMX
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>Link Props</h3>
 			<table class="props-table">
@@ -609,10 +649,14 @@ templ Content() {
 				</p>
 			</div>
 			<div class="code-block">
-				<pre><code>{ `<p>
+				<pre>
+					<code>
+						{ `<p>
     Loading data
     @loading.SpinnerInline(loading.Props{})
-</p>` }</code></pre>
+</p>` }
+					</code>
+				</pre>
 			</div>
 			<h3>Loading Button</h3>
 			<p>Buttons that show a loading state when processing.</p>
@@ -624,11 +668,15 @@ templ Content() {
 				</div>
 			</div>
 			<div class="code-block">
-				<pre><code>{ `// Normal state
+				<pre>
+					<code>
+						{ `// Normal state
 @loading.LoadingButton(loading.ButtonProps{Text: "Submit", Loading: false})
 
 // Loading state
-@loading.LoadingButton(loading.ButtonProps{Text: "Processing...", Loading: true})` }</code></pre>
+@loading.LoadingButton(loading.ButtonProps{Text: "Processing...", Loading: true})` }
+					</code>
+				</pre>
 			</div>
 			<h3>Loading Article</h3>
 			<p>An article card with a loading indicator.</p>
@@ -638,9 +686,13 @@ templ Content() {
 				}
 			</div>
 			<div class="code-block">
-				<pre><code>{ `@loading.LoadingArticle(loading.Props{}) {
+				<pre>
+					<code>
+						{ `@loading.LoadingArticle(loading.Props{}) {
     <p>Content is loading...</p>
-}` }</code></pre>
+}` }
+					</code>
+				</pre>
 			</div>
 			<h3>Loading Placeholder</h3>
 			<p>A placeholder element for content that is being loaded.</p>

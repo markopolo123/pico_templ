@@ -64,7 +64,12 @@ func classes(base string, additional string) string {
 templ Table(props Props) {
 	<table
 		if props.Striped || props.Class != "" {
-			class={ classes(func() string { if props.Striped { return "striped" }; return "" }(), props.Class) }
+			class={ classes(func() string {
+	if props.Striped {
+		return "striped"
+	}
+	return ""
+}(), props.Class) }
 		}
 		{ props.Attrs... }
 	>
