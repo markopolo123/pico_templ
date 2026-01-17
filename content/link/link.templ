@@ -1,0 +1,150 @@
+// Package link provides link components for Pico CSS with HTMX support.
+package link
+
+// Props contains properties for the Link component.
+type Props struct {
+	Href      string           // URL to link to
+	Target    string           // _blank, _self, _parent, _top
+	Rel       string           // Link relationship (noopener, noreferrer, etc.)
+	Title     string           // Tooltip title
+	Download  string           // Download attribute (filename or empty string for true)
+	Class     string           // Additional CSS classes
+	Secondary bool             // Use secondary color styling
+	Contrast  bool             // Use contrast color styling
+	HxGet     string           // HTMX hx-get attribute
+	HxPost    string           // HTMX hx-post attribute
+	HxTarget  string           // HTMX hx-target attribute
+	HxSwap    string           // HTMX hx-swap attribute
+	HxTrigger string           // HTMX hx-trigger attribute
+	HxPushURL string           // HTMX hx-push-url attribute
+	Attrs     templ.Attributes // Arbitrary additional attributes
+}
+
+// classes builds a space-separated class string.
+func (p Props) classes() string {
+	var result string
+	if p.Secondary {
+		result = "secondary"
+	}
+	if p.Contrast {
+		if result != "" {
+			result += " "
+		}
+		result += "contrast"
+	}
+	if p.Class != "" {
+		if result != "" {
+			result += " "
+		}
+		result += p.Class
+	}
+	return result
+}
+
+// Link renders an anchor element with optional HTMX attributes.
+templ Link(props Props) {
+	<a
+		if props.Href != "" {
+			href={ templ.SafeURL(props.Href) }
+		}
+		if props.Target != "" {
+			target={ props.Target }
+		}
+		if props.Rel != "" {
+			rel={ props.Rel }
+		}
+		if props.Title != "" {
+			title={ props.Title }
+		}
+		if props.Download != "" {
+			download={ props.Download }
+		}
+		if props.classes() != "" {
+			class={ props.classes() }
+		}
+		if props.HxGet != "" {
+			hx-get={ props.HxGet }
+		}
+		if props.HxPost != "" {
+			hx-post={ props.HxPost }
+		}
+		if props.HxTarget != "" {
+			hx-target={ props.HxTarget }
+		}
+		if props.HxSwap != "" {
+			hx-swap={ props.HxSwap }
+		}
+		if props.HxTrigger != "" {
+			hx-trigger={ props.HxTrigger }
+		}
+		if props.HxPushURL != "" {
+			hx-push-url={ props.HxPushURL }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</a>
+}
+
+// ExternalLink renders a link that opens in a new tab with proper security attributes.
+templ ExternalLink(props Props) {
+	<a
+		if props.Href != "" {
+			href={ templ.SafeURL(props.Href) }
+		}
+		target="_blank"
+		rel="noopener noreferrer"
+		if props.Title != "" {
+			title={ props.Title }
+		}
+		if props.classes() != "" {
+			class={ props.classes() }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</a>
+}
+
+// ButtonLink renders a link styled as a button.
+templ ButtonLink(props Props) {
+	<a
+		role="button"
+		if props.Href != "" {
+			href={ templ.SafeURL(props.Href) }
+		}
+		if props.Target != "" {
+			target={ props.Target }
+		}
+		if props.Rel != "" {
+			rel={ props.Rel }
+		}
+		if props.Title != "" {
+			title={ props.Title }
+		}
+		if props.classes() != "" {
+			class={ props.classes() }
+		}
+		if props.HxGet != "" {
+			hx-get={ props.HxGet }
+		}
+		if props.HxPost != "" {
+			hx-post={ props.HxPost }
+		}
+		if props.HxTarget != "" {
+			hx-target={ props.HxTarget }
+		}
+		if props.HxSwap != "" {
+			hx-swap={ props.HxSwap }
+		}
+		if props.HxTrigger != "" {
+			hx-trigger={ props.HxTrigger }
+		}
+		if props.HxPushURL != "" {
+			hx-push-url={ props.HxPushURL }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</a>
+}
