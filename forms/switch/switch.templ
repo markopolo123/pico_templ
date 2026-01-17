@@ -1,0 +1,41 @@
+package switch_
+
+// Props configures the Switch component.
+type Props struct {
+	Name     string           // Input name attribute
+	ID       string           // Input id attribute
+	Label    string           // Label text
+	Checked  bool             // Whether the switch is checked
+	Disabled bool             // Whether the switch is disabled
+	Class    string           // Additional CSS classes for the label
+	Attrs    templ.Attributes // Additional attributes for the input
+}
+
+// Switch renders a toggle switch using Pico CSS's switch pattern.
+// It renders as a checkbox with role="switch" wrapped in a label.
+templ Switch(props Props) {
+	<label
+		if props.Class != "" {
+			class={ props.Class }
+		}
+	>
+		<input
+			type="checkbox"
+			role="switch"
+			if props.Name != "" {
+				name={ props.Name }
+			}
+			if props.ID != "" {
+				id={ props.ID }
+			}
+			if props.Checked {
+				checked
+			}
+			if props.Disabled {
+				disabled
+			}
+			{ props.Attrs... }
+		/>
+		{ props.Label }
+	</label>
+}
