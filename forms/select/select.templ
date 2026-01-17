@@ -1,0 +1,89 @@
+package selectfield
+
+// Option represents a single select option.
+type Option struct {
+	Value    string
+	Label    string
+	Selected bool
+	Disabled bool
+}
+
+// OptGroup represents a group of options.
+type OptGroup struct {
+	Label   string
+	Options []Option
+}
+
+// Props contains all properties for the Select component.
+type Props struct {
+	Name        string           // name attribute
+	ID          string           // id attribute
+	Label       string           // Label text above the select
+	Options     []Option         // Flat options
+	OptGroups   []OptGroup       // Grouped options
+	Placeholder string           // First disabled option
+	Required    bool             // required attribute
+	Disabled    bool             // disabled attribute
+	Invalid     bool             // Sets aria-invalid="true"
+	HelperText  string           // Helper text below the select
+	Class       string           // Additional CSS classes
+	Attrs       templ.Attributes // Additional attributes
+}
+
+// Select renders a styled select dropdown component following Pico CSS conventions.
+templ Select(props Props) {
+	if props.Label != "" {
+		<label for={ props.ID }>{ props.Label }</label>
+	}
+	<select
+		name={ props.Name }
+		if props.ID != "" {
+			id={ props.ID }
+		}
+		if props.Required {
+			required
+		}
+		if props.Disabled {
+			disabled
+		}
+		if props.Invalid {
+			aria-invalid="true"
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		if props.Placeholder != "" {
+			<option selected disabled value="">{ props.Placeholder }</option>
+		}
+		for _, opt := range props.Options {
+			@renderOption(opt)
+		}
+		for _, group := range props.OptGroups {
+			<optgroup label={ group.Label }>
+				for _, opt := range group.Options {
+					@renderOption(opt)
+				}
+			</optgroup>
+		}
+	</select>
+	if props.HelperText != "" {
+		<small>{ props.HelperText }</small>
+	}
+}
+
+// renderOption renders a single option element.
+templ renderOption(opt Option) {
+	<option
+		value={ opt.Value }
+		if opt.Selected {
+			selected
+		}
+		if opt.Disabled {
+			disabled
+		}
+	>
+		{ opt.Label }
+	</option>
+}
