@@ -1,0 +1,50 @@
+package checkbox
+
+// Props defines the properties for a Checkbox component.
+type Props struct {
+	Name     string           // Input name attribute
+	ID       string           // Input id attribute
+	Label    string           // Label text (required for accessibility)
+	Value    string           // Value when checked
+	Checked  bool             // Whether checkbox is checked
+	Disabled bool             // Whether checkbox is disabled
+	Invalid  bool             // Whether checkbox has validation error
+	Class    string           // Additional CSS classes
+	Attrs    templ.Attributes // Additional attributes
+}
+
+// Checkbox renders a checkbox input with associated label.
+templ Checkbox(props Props) {
+	<label
+		if props.Disabled {
+			aria-disabled="true"
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+	>
+		<input
+			type="checkbox"
+			if props.Name != "" {
+				name={ props.Name }
+			}
+			if props.ID != "" {
+				id={ props.ID }
+			}
+			if props.Value != "" {
+				value={ props.Value }
+			}
+			if props.Checked {
+				checked
+			}
+			if props.Disabled {
+				disabled
+			}
+			if props.Invalid {
+				aria-invalid="true"
+			}
+			{ props.Attrs... }
+		/>
+		{ props.Label }
+	</label>
+}
