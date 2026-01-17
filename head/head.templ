@@ -1,0 +1,24 @@
+package head
+
+templ Head(props Props) {
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>{ props.Title }</title>
+		if props.Description != "" {
+			<meta name="description" content={ props.Description }/>
+		}
+		if props.IncludePico {
+			@rawStyle(picoCSS())
+		}
+		if props.IncludeHTMX {
+			@rawScript(htmxJS())
+		}
+		if props.IncludeHyperscript {
+			@rawScript(hyperscriptJS())
+		}
+		if props.ExtraHead != nil {
+			@props.ExtraHead
+		}
+	</head>
+}

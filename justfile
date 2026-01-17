@@ -5,6 +5,10 @@ set shell := ["flox", "activate", "--", "bash", "-c"]
 default:
     @just --list
 
+# Download and verify assets
+assets:
+    go generate ./head/...
+
 # Generate templ files
 generate:
     templ generate
@@ -18,7 +22,7 @@ test-v: generate
     go test -v ./...
 
 # Build the project
-build: generate
+build: assets generate
     go build ./...
 
 # Format all files
