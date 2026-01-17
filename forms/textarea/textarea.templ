@@ -1,0 +1,127 @@
+package textarea
+
+import (
+	"strconv"
+
+	"github.com/markopolo123/pico_templ/attrs"
+)
+
+// Props defines the properties for the Textarea component.
+type Props struct {
+	Name        string           // Field name
+	ID          string           // Element ID (defaults to Name)
+	Label       string           // Label text
+	Placeholder string           // Placeholder text
+	Value       string           // Initial value
+	Rows        int              // Number of visible rows
+	Required    bool             // Required field
+	Disabled    bool             // Disabled state
+	ReadOnly    bool             // Read-only state
+	Invalid     bool             // Invalid state (aria-invalid)
+	HelperText  string           // Helper text below textarea
+	Class       string           // Additional CSS classes
+	Htmx        attrs.HtmxAttrs  // HTMX attributes
+	Attrs       templ.Attributes // Additional attributes
+}
+
+// id returns the element ID, defaulting to Name if not set.
+func (p Props) id() string {
+	if p.ID != "" {
+		return p.ID
+	}
+	return p.Name
+}
+
+// helperID returns the ID for the helper text element.
+func (p Props) helperID() string {
+	return p.id() + "-helper"
+}
+
+// Textarea renders a multi-line text input component.
+templ Textarea(props Props) {
+	if props.Label != "" {
+		<label for={ props.id() }>
+			{ props.Label }
+			@textareaElement(props)
+			if props.HelperText != "" {
+				<small id={ props.helperID() }>{ props.HelperText }</small>
+			}
+		</label>
+	} else {
+		@textareaElement(props)
+		if props.HelperText != "" {
+			<small id={ props.helperID() }>{ props.HelperText }</small>
+		}
+	}
+}
+
+templ textareaElement(props Props) {
+	<textarea
+		name={ props.Name }
+		id={ props.id() }
+		if props.Placeholder != "" {
+			placeholder={ props.Placeholder }
+		}
+		if props.Rows > 0 {
+			rows={ strconv.Itoa(props.Rows) }
+		}
+		if props.Required {
+			required
+		}
+		if props.Disabled {
+			disabled
+		}
+		if props.ReadOnly {
+			readonly
+		}
+		if props.Invalid {
+			aria-invalid="true"
+		}
+		if props.HelperText != "" {
+			aria-describedby={ props.helperID() }
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		if props.Htmx.Get != "" {
+			hx-get={ props.Htmx.Get }
+		}
+		if props.Htmx.Post != "" {
+			hx-post={ props.Htmx.Post }
+		}
+		if props.Htmx.Put != "" {
+			hx-put={ props.Htmx.Put }
+		}
+		if props.Htmx.Delete != "" {
+			hx-delete={ props.Htmx.Delete }
+		}
+		if props.Htmx.Patch != "" {
+			hx-patch={ props.Htmx.Patch }
+		}
+		if props.Htmx.Target != "" {
+			hx-target={ props.Htmx.Target }
+		}
+		if props.Htmx.Swap != "" {
+			hx-swap={ props.Htmx.Swap }
+		}
+		if props.Htmx.Trigger != "" {
+			hx-trigger={ props.Htmx.Trigger }
+		}
+		if props.Htmx.Confirm != "" {
+			hx-confirm={ props.Htmx.Confirm }
+		}
+		if props.Htmx.Indicator != "" {
+			hx-indicator={ props.Htmx.Indicator }
+		}
+		if props.Htmx.PushURL != "" {
+			hx-push-url={ props.Htmx.PushURL }
+		}
+		if props.Htmx.Select != "" {
+			hx-select={ props.Htmx.Select }
+		}
+		if props.Htmx.Vals != "" {
+			hx-vals={ props.Htmx.Vals }
+		}
+		{ props.Attrs... }
+	>{ props.Value }</textarea>
+}
