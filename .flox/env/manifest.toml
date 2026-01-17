@@ -21,6 +21,7 @@ prek.pkg-path = "prek"
 just.pkg-path = "just"
 goreleaser.pkg-path = "goreleaser"
 templ.pkg-path = "templ"
+gotools.pkg-path = "gotools"
 
 
 ## Environment Variables ---------------------------------------------

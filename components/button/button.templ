@@ -1,0 +1,41 @@
+package button
+
+// Button renders a button element with Pico CSS styling and HTMX support.
+templ Button(props Props) {
+	<button
+		type={ props.buttonType() }
+		if props.classes() != "" {
+			class={ props.classes() }
+		}
+		if props.Disabled {
+			disabled
+		}
+		if props.HxGet != "" {
+			hx-get={ props.HxGet }
+		}
+		if props.HxPost != "" {
+			hx-post={ props.HxPost }
+		}
+		if props.HxPut != "" {
+			hx-put={ props.HxPut }
+		}
+		if props.HxDelete != "" {
+			hx-delete={ props.HxDelete }
+		}
+		if props.HxPatch != "" {
+			hx-patch={ props.HxPatch }
+		}
+		if props.HxTarget != "" {
+			hx-target={ props.HxTarget }
+		}
+		if props.HxSwap != "" {
+			hx-swap={ props.HxSwap }
+		}
+		if props.HxTrigger != "" {
+			hx-trigger={ props.HxTrigger }
+		}
+		{ props.Attrs... }
+	>
+		{ props.Text }
+	</button>
+}

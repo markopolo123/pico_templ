@@ -33,12 +33,14 @@ repos:
         entry: flox activate -- gofmt -w
         language: system
         types: [go]
+        exclude: '_templ\.go$'
 
       - id: go-imports
         name: go imports
         entry: flox activate -- goimports -w
         language: system
         types: [go]
+        exclude: '_templ\.go$'
 
       - id: go-vet
         name: go vet
