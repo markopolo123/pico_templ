@@ -1,0 +1,61 @@
+version: 2
+
+before:
+  hooks:
+    - flox activate -- templ generate
+    - flox activate -- go mod tidy
+
+builds:
+  - id: pico_templ
+    main: ./cmd/pico_templ
+    binary: pico_templ
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - id: default
+    format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- .Arch }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - Merge pull request
+      - Merge branch
+
+release:
+  github:
+    owner: markopolo123
+    name: pico_templ
+  draft: false
+  prerelease: auto
+  mode: replace
+  name_template: "v{{.Version}}"

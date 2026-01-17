@@ -41,3 +41,30 @@ test-pkg pkg: generate
 # Generate and watch for changes
 watch:
     templ generate --watch
+
+# Run pre-commit on all files
+pre-commit:
+    prek run --all-files
+
+# Install pre-commit hooks
+pre-commit-install:
+    prek install
+
+# Check release configuration (dry run)
+release-check:
+    goreleaser check
+
+# Build snapshot release locally (no publish)
+release-snapshot:
+    goreleaser release --snapshot --clean
+
+# Create and push a new release tag
+release version:
+    @echo "Creating release {{version}}..."
+    git tag -a "v{{version}}" -m "Release v{{version}}"
+    git push origin "v{{version}}"
+    @echo "Release v{{version}} tagged and pushed. GitHub Actions will build and publish."
+
+# Build release locally with 1Password GitHub token
+release-local:
+    GITHUB_TOKEN=$(op read "op://homelab/pico GitHub Personal Access Token/token") goreleaser release --clean
