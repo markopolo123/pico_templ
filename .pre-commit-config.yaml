@@ -11,6 +11,23 @@ repos:
 
   - repo: local
     hooks:
+      # templ hooks must run before Go hooks so generated files get formatted
+      - id: templ-fmt
+        name: templ fmt
+        entry: flox activate -- templ fmt .
+        language: system
+        pass_filenames: false
+        types: [file]
+        files: '\.templ$'
+
+      - id: templ-generate
+        name: templ generate
+        entry: flox activate -- templ generate
+        language: system
+        pass_filenames: false
+        types: [file]
+        files: '\.templ$'
+
       - id: go-fmt
         name: go fmt
         entry: flox activate -- gofmt -w
@@ -29,22 +46,6 @@ repos:
         language: system
         types: [go]
         pass_filenames: false
-
-      - id: templ-fmt
-        name: templ fmt
-        entry: flox activate -- templ fmt .
-        language: system
-        pass_filenames: false
-        types: [file]
-        files: '\.templ$'
-
-      - id: templ-generate
-        name: templ generate
-        entry: flox activate -- templ generate
-        language: system
-        pass_filenames: false
-        types: [file]
-        files: '\.templ$'
 
       - id: go-test
         name: go test
