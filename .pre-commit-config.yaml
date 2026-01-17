@@ -22,7 +22,7 @@ repos:
 
       - id: templ-generate
         name: templ generate
-        entry: flox activate -- templ generate
+        entry: bash -c 'flox activate -- templ generate && git diff --exit-code -- "*_templ.go"'
         language: system
         pass_filenames: false
         types: [file]
