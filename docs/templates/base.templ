@@ -1,0 +1,275 @@
+package templates
+
+import "github.com/markopolo123/pico_templ/head"
+
+// NavItem represents a navigation link
+type NavItem struct {
+	Title string
+	Path  string
+}
+
+// BaseProps contains configuration for the base template
+type BaseProps struct {
+	Title       string
+	CurrentPath string
+}
+
+// Navigation items for the sidebar
+var navItems = []NavItem{
+	{Title: "Home", Path: "/"},
+	{Title: "Components", Path: "/components"},
+	{Title: "Forms", Path: "/forms"},
+	{Title: "Layout", Path: "/layout"},
+	{Title: "Content", Path: "/content"},
+}
+
+// isCurrentPage checks if the given path is the current page
+func isCurrentPage(current, path string) bool {
+	return current == path
+}
+
+templ themeToggleScript() {
+	<script>
+		// Theme switcher functionality
+		(function() {
+			const html = document.documentElement;
+			const themeToggle = document.getElementById('theme-toggle');
+
+			// Get saved theme or default to auto
+			const savedTheme = localStorage.getItem('pico-theme') || 'auto';
+
+			// Apply saved theme
+			if (savedTheme !== 'auto') {
+				html.setAttribute('data-theme', savedTheme);
+			}
+
+			// Update toggle button text
+			function updateToggleText() {
+				const currentTheme = html.getAttribute('data-theme') || 'auto';
+				if (themeToggle) {
+					if (currentTheme === 'dark') {
+						themeToggle.textContent = '☀️ Light';
+					} else {
+						themeToggle.textContent = '🌙 Dark';
+					}
+				}
+			}
+
+			// Toggle theme
+			window.toggleTheme = function() {
+				const currentTheme = html.getAttribute('data-theme');
+				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+				html.setAttribute('data-theme', newTheme);
+				localStorage.setItem('pico-theme', newTheme);
+				updateToggleText();
+			};
+
+			// Initialize button text on load
+			document.addEventListener('DOMContentLoaded', updateToggleText);
+		})();
+	</script>
+}
+
+templ sidebarStyles() {
+	<style>
+		/* Sidebar layout */
+		.docs-layout {
+			display: grid;
+			grid-template-columns: 280px 1fr;
+			min-height: 100vh;
+		}
+
+		.docs-sidebar {
+			position: sticky;
+			top: 0;
+			height: 100vh;
+			overflow-y: auto;
+			padding: var(--pico-spacing);
+			border-right: 1px solid var(--pico-muted-border-color);
+			background: var(--pico-background-color);
+		}
+
+		.docs-sidebar-header {
+			margin-bottom: var(--pico-spacing);
+			padding-bottom: var(--pico-spacing);
+			border-bottom: 1px solid var(--pico-muted-border-color);
+		}
+
+		.docs-sidebar-header h2 {
+			margin: 0;
+			font-size: 1.25rem;
+		}
+
+		.docs-sidebar-header p {
+			margin: 0.5rem 0 0 0;
+			font-size: 0.875rem;
+			color: var(--pico-muted-color);
+		}
+
+		.docs-nav {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.docs-nav li {
+			margin: 0;
+		}
+
+		.docs-nav a {
+			display: block;
+			padding: 0.5rem 0.75rem;
+			border-radius: var(--pico-border-radius);
+			text-decoration: none;
+			color: var(--pico-color);
+			transition: background-color 0.2s ease;
+		}
+
+		.docs-nav a:hover {
+			background: var(--pico-secondary-hover-background);
+		}
+
+		.docs-nav a[aria-current="page"] {
+			background: var(--pico-primary-background);
+			color: var(--pico-primary-inverse);
+			font-weight: 600;
+		}
+
+		.docs-main {
+			padding: var(--pico-spacing);
+			max-width: 100%;
+			overflow-x: hidden;
+		}
+
+		.docs-main > .container {
+			max-width: 960px;
+		}
+
+		.docs-footer {
+			margin-top: var(--pico-spacing);
+			padding: var(--pico-spacing) 0;
+			border-top: 1px solid var(--pico-muted-border-color);
+		}
+
+		.sidebar-footer {
+			margin-top: auto;
+			padding-top: var(--pico-spacing);
+			border-top: 1px solid var(--pico-muted-border-color);
+		}
+
+		.sidebar-footer-links {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		.theme-toggle {
+			width: 100%;
+			margin-bottom: 0.5rem;
+		}
+
+		/* Responsive: collapse sidebar on smaller screens */
+		@media (max-width: 992px) {
+			.docs-layout {
+				grid-template-columns: 1fr;
+			}
+
+			.docs-sidebar {
+				position: relative;
+				height: auto;
+				border-right: none;
+				border-bottom: 1px solid var(--pico-muted-border-color);
+			}
+
+			.docs-nav {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+
+			.docs-nav a {
+				padding: 0.25rem 0.75rem;
+			}
+
+			.sidebar-footer {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				align-items: center;
+			}
+
+			.sidebar-footer-links {
+				flex-direction: row;
+			}
+
+			.theme-toggle {
+				width: auto;
+				margin-bottom: 0;
+			}
+		}
+	</style>
+}
+
+templ Base(props BaseProps) {
+	<!DOCTYPE html>
+	<html lang="en">
+		@head.Head(head.Props{
+			Title:              props.Title + " | pico_templ",
+			Description:        "Documentation and showcase for pico_templ - A Go templ component library with embedded Pico CSS, HTMX, and _hyperscript",
+			IncludePico:        true,
+			IncludeHTMX:        true,
+			IncludeHyperscript: true,
+			ExtraHead:          sidebarStyles(),
+		})
+		<body>
+			<div class="docs-layout">
+				<aside class="docs-sidebar">
+					<div class="docs-sidebar-header">
+						<h2>pico_templ</h2>
+						<p>Pico CSS + HTMX + _hyperscript</p>
+					</div>
+					<nav>
+						<ul class="docs-nav">
+							for _, item := range navItems {
+								<li>
+									if isCurrentPage(props.CurrentPath, item.Path) {
+										<a href={ templ.SafeURL(item.Path) } aria-current="page">{ item.Title }</a>
+									} else {
+										<a href={ templ.SafeURL(item.Path) }>{ item.Title }</a>
+									}
+								</li>
+							}
+						</ul>
+					</nav>
+					<div class="sidebar-footer">
+						<button id="theme-toggle" class="theme-toggle secondary outline" onclick="toggleTheme()">
+							Toggle Theme
+						</button>
+						<div class="sidebar-footer-links">
+							<a href="https://github.com/markopolo123/pico_templ" target="_blank" rel="noopener noreferrer">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 0.25rem;">
+									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+								</svg>
+								GitHub
+							</a>
+						</div>
+					</div>
+				</aside>
+				<main class="docs-main">
+					<div class="container">
+						{ children... }
+					</div>
+					<footer class="docs-footer container">
+						<small>
+							Built with <a href="https://github.com/a-h/templ" target="_blank" rel="noopener noreferrer">templ</a>,
+							<a href="https://picocss.com" target="_blank" rel="noopener noreferrer">Pico CSS</a>,
+							<a href="https://htmx.org" target="_blank" rel="noopener noreferrer">HTMX</a>, and
+							<a href="https://hyperscript.org" target="_blank" rel="noopener noreferrer">_hyperscript</a>
+						</small>
+					</footer>
+				</main>
+			</div>
+			@themeToggleScript()
+		</body>
+	</html>
+}

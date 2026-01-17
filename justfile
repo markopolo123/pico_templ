@@ -72,3 +72,20 @@ release version:
 # Build release locally with 1Password GitHub token
 release-local:
     GITHUB_TOKEN=$(op read "op://homelab/pico GitHub Personal Access Token/token") goreleaser release --clean
+
+# Generate docs site
+docs-generate: generate
+    @echo "Generating docs..."
+
+# Build docs site to dist/
+docs-build: docs-generate
+    @echo "Building docs site..."
+    go run ./docs/main.go
+
+# Serve docs locally for preview
+docs-serve: docs-build
+    @echo "Serving docs at http://localhost:8080"
+    cd dist && python3 -m http.server 8080
+
+# Build and serve docs
+docs: docs-serve

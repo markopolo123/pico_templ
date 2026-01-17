@@ -1,0 +1,255 @@
+package pages
+
+import (
+	"github.com/markopolo123/pico_templ/docs/templates"
+	"github.com/markopolo123/pico_templ/layout/container"
+)
+
+templ Layout() {
+	@templates.Base(templates.BaseProps{
+		Title:       "Layout",
+		CurrentPath: "/layout",
+	}) {
+		<h1>Layout Components</h1>
+		<p class="lead">
+			Layout components help structure your page content. They provide consistent spacing,
+			alignment, and responsive behavior using Pico CSS conventions.
+		</p>
+
+		<nav>
+			<ul>
+				<li><a href="#container">Container</a></li>
+				<li><a href="#grid">Grid</a></li>
+				<li><a href="#group">Group</a></li>
+				<li><a href="#tooltip">Tooltip</a></li>
+			</ul>
+		</nav>
+
+		<hr/>
+
+		<!-- Container Section -->
+		<section id="container">
+			<h2>Container</h2>
+			<p>
+				The Container component provides a centered, max-width wrapper for your content.
+				Use it to constrain content width and add consistent horizontal padding.
+				Choose between a standard container with a max-width or a fluid container
+				that spans the full viewport width.
+			</p>
+
+			<h3>Standard Container</h3>
+			<p>A centered container with a maximum width, ideal for readable content areas.</p>
+
+			<div style="background: var(--pico-muted-border-color); padding: 1rem; margin-bottom: 1rem;">
+				@container.Container(container.Props{}) {
+					<div style="background: var(--pico-primary-background); color: var(--pico-primary-inverse); padding: 1rem; text-align: center;">
+						Standard Container Content
+					</div>
+				}
+			</div>
+
+			<pre><code>{ `@container.Container(container.Props{}) {
+    <p>Your content here</p>
+}` }</code></pre>
+
+			<h3>Fluid Container</h3>
+			<p>A full-width container that spans the entire viewport, useful for hero sections or full-bleed layouts.</p>
+
+			<div style="background: var(--pico-muted-border-color); padding: 1rem; margin-bottom: 1rem;">
+				@container.Container(container.Props{Fluid: true}) {
+					<div style="background: var(--pico-secondary-background); color: var(--pico-secondary-inverse); padding: 1rem; text-align: center;">
+						Fluid Container Content (Full Width)
+					</div>
+				}
+			</div>
+
+			<pre><code>{ `@container.Container(container.Props{Fluid: true}) {
+    <p>Full-width content here</p>
+}` }</code></pre>
+
+			<h3>Container with Custom Class</h3>
+			<p>Add custom CSS classes for additional styling.</p>
+
+			<pre><code>{ `@container.Container(container.Props{
+    Class: "my-custom-class",
+}) {
+    <p>Content with custom styling</p>
+}` }</code></pre>
+
+			<h3>Props Reference</h3>
+			<figure>
+				<table>
+					<thead>
+						<tr>
+							<th>Prop</th>
+							<th>Type</th>
+							<th>Default</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><code>Fluid</code></td>
+							<td>bool</td>
+							<td>false</td>
+							<td>Use .container-fluid for full-width layout</td>
+						</tr>
+						<tr>
+							<td><code>Class</code></td>
+							<td>string</td>
+							<td>""</td>
+							<td>Additional CSS classes to apply</td>
+						</tr>
+						<tr>
+							<td><code>Attrs</code></td>
+							<td>templ.Attributes</td>
+							<td>nil</td>
+							<td>Arbitrary additional HTML attributes</td>
+						</tr>
+					</tbody>
+				</table>
+			</figure>
+		</section>
+
+		<hr/>
+
+		<!-- Grid Section (Coming Soon) -->
+		<section id="grid">
+			<h2>Grid</h2>
+			<mark>Coming Soon</mark>
+			<p>
+				The Grid component will provide a flexible CSS grid system for creating
+				responsive multi-column layouts. It will support configurable columns,
+				gaps, and alignment options.
+			</p>
+
+			<h3>Planned Features</h3>
+			<ul>
+				<li>Configurable number of columns</li>
+				<li>Responsive breakpoints</li>
+				<li>Gap control (row and column)</li>
+				<li>Alignment options (items and content)</li>
+			</ul>
+
+			<h3>Preview (using native CSS grid)</h3>
+			<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+				<div style="background: var(--pico-primary-background); color: var(--pico-primary-inverse); padding: 1rem; text-align: center; border-radius: var(--pico-border-radius);">
+					Column 1
+				</div>
+				<div style="background: var(--pico-primary-background); color: var(--pico-primary-inverse); padding: 1rem; text-align: center; border-radius: var(--pico-border-radius);">
+					Column 2
+				</div>
+				<div style="background: var(--pico-primary-background); color: var(--pico-primary-inverse); padding: 1rem; text-align: center; border-radius: var(--pico-border-radius);">
+					Column 3
+				</div>
+			</div>
+
+			<pre><code>{ `// Planned API (subject to change)
+@grid.Grid(grid.Props{Columns: 3, Gap: "1rem"}) {
+    <div>Column 1</div>
+    <div>Column 2</div>
+    <div>Column 3</div>
+}` }</code></pre>
+		</section>
+
+		<hr/>
+
+		<!-- Group Section (Coming Soon) -->
+		<section id="group">
+			<h2>Group</h2>
+			<mark>Coming Soon</mark>
+			<p>
+				The Group component will provide a flexbox-based horizontal or vertical
+				grouping of elements with consistent spacing. Ideal for button groups,
+				navigation items, or any collection of related elements.
+			</p>
+
+			<h3>Planned Features</h3>
+			<ul>
+				<li>Horizontal and vertical orientation</li>
+				<li>Configurable gap spacing</li>
+				<li>Alignment and justification options</li>
+				<li>Wrap behavior control</li>
+			</ul>
+
+			<h3>Preview (using native flexbox)</h3>
+			<div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+				<button class="secondary">Action 1</button>
+				<button class="secondary">Action 2</button>
+				<button class="secondary">Action 3</button>
+			</div>
+
+			<pre><code>{ `// Planned API (subject to change)
+@group.Group(group.Props{Gap: "0.5rem"}) {
+    <button>Action 1</button>
+    <button>Action 2</button>
+    <button>Action 3</button>
+}` }</code></pre>
+		</section>
+
+		<hr/>
+
+		<!-- Tooltip Section (Coming Soon) -->
+		<section id="tooltip">
+			<h2>Tooltip</h2>
+			<mark>Coming Soon</mark>
+			<p>
+				The Tooltip component will provide accessible tooltip functionality
+				using Pico CSS's built-in tooltip support. Tooltips display additional
+				information when users hover over or focus on an element.
+			</p>
+
+			<h3>Planned Features</h3>
+			<ul>
+				<li>Multiple placement options (top, bottom, left, right)</li>
+				<li>Keyboard accessible</li>
+				<li>Custom tooltip content</li>
+				<li>Delay configuration</li>
+			</ul>
+
+			<h3>Preview (using native Pico tooltip)</h3>
+			<p>
+				Hover over this <span data-tooltip="This is a tooltip!" style="text-decoration: underline; cursor: help;">underlined text</span> to see a tooltip.
+			</p>
+
+			<pre><code>{ `// Planned API (subject to change)
+@tooltip.Tooltip(tooltip.Props{
+    Content: "This is a tooltip!",
+    Position: "top",
+}) {
+    <span>Hover me</span>
+}` }</code></pre>
+		</section>
+
+		<hr/>
+
+		<!-- Usage Tips Section -->
+		<section id="usage-tips">
+			<h2>Usage Tips</h2>
+
+			<h3>Import Statement</h3>
+			<pre><code>{ `import (
+    "github.com/markopolo123/pico_templ/layout/container"
+    // Future imports:
+    // "github.com/markopolo123/pico_templ/layout/grid"
+    // "github.com/markopolo123/pico_templ/layout/group"
+    // "github.com/markopolo123/pico_templ/layout/tooltip"
+)` }</code></pre>
+
+			<h3>Combining Layout Components</h3>
+			<p>
+				Layout components can be nested and combined to create complex page structures.
+				For example, use a Container to constrain width, then a Grid inside for
+				multi-column content.
+			</p>
+
+			<pre><code>{ `@container.Container(container.Props{}) {
+    // Grid inside container
+    <div class="grid">
+        <div>Sidebar</div>
+        <div>Main Content</div>
+    </div>
+}` }</code></pre>
+		</section>
+	}
+}

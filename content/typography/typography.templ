@@ -1,0 +1,269 @@
+// Package typography provides typography components for Pico CSS.
+package typography
+
+// HeadingProps contains properties for heading components.
+type HeadingProps struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// ParagraphProps contains properties for paragraph components.
+type ParagraphProps struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// TextProps contains properties for inline text styling components.
+type TextProps struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// BlockquoteProps contains properties for blockquote components.
+type BlockquoteProps struct {
+	Cite  string           // Citation URL
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// H1 renders an h1 heading element.
+templ H1(props HeadingProps) {
+	<h1
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</h1>
+}
+
+// H2 renders an h2 heading element.
+templ H2(props HeadingProps) {
+	<h2
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</h2>
+}
+
+// H3 renders an h3 heading element.
+templ H3(props HeadingProps) {
+	<h3
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</h3>
+}
+
+// H4 renders an h4 heading element.
+templ H4(props HeadingProps) {
+	<h4
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</h4>
+}
+
+// H5 renders an h5 heading element.
+templ H5(props HeadingProps) {
+	<h5
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</h5>
+}
+
+// H6 renders an h6 heading element.
+templ H6(props HeadingProps) {
+	<h6
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</h6>
+}
+
+// P renders a paragraph element.
+templ P(props ParagraphProps) {
+	<p
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</p>
+}
+
+// Small renders a small text element.
+templ Small(props TextProps) {
+	<small
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</small>
+}
+
+// Strong renders a strong/bold text element.
+templ Strong(props TextProps) {
+	<strong
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</strong>
+}
+
+// Em renders an emphasis/italic text element.
+templ Em(props TextProps) {
+	<em
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</em>
+}
+
+// Mark renders a highlighted/marked text element.
+templ Mark(props TextProps) {
+	<mark
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</mark>
+}
+
+// Del renders a deleted/strikethrough text element.
+templ Del(props TextProps) {
+	<del
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</del>
+}
+
+// Ins renders an inserted/underlined text element.
+templ Ins(props TextProps) {
+	<ins
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</ins>
+}
+
+// Sub renders a subscript text element.
+templ Sub(props TextProps) {
+	<sub
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</sub>
+}
+
+// Sup renders a superscript text element.
+templ Sup(props TextProps) {
+	<sup
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</sup>
+}
+
+// Abbr renders an abbreviation element.
+templ Abbr(title string, props TextProps) {
+	<abbr
+		title={ title }
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</abbr>
+}
+
+// Kbd renders a keyboard input element.
+templ Kbd(props TextProps) {
+	<kbd
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</kbd>
+}
+
+// Code renders an inline code element.
+templ Code(props TextProps) {
+	<code
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</code>
+}
+
+// Pre renders a preformatted text block.
+templ Pre(props TextProps) {
+	<pre
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>{ children... }</pre>
+}
+
+// Blockquote renders a blockquote element.
+templ Blockquote(props BlockquoteProps) {
+	<blockquote
+		if props.Cite != "" {
+			cite={ props.Cite }
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</blockquote>
+}

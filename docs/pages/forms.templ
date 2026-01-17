@@ -1,0 +1,990 @@
+package pages
+
+import (
+	"github.com/markopolo123/pico_templ/docs/templates"
+	"github.com/markopolo123/pico_templ/forms/checkbox"
+	"github.com/markopolo123/pico_templ/forms/input"
+	"github.com/markopolo123/pico_templ/forms/radio"
+	rangecomp "github.com/markopolo123/pico_templ/forms/range"
+	selectfield "github.com/markopolo123/pico_templ/forms/select"
+	switch_ "github.com/markopolo123/pico_templ/forms/switch"
+	"github.com/markopolo123/pico_templ/forms/textarea"
+)
+
+templ Forms() {
+	@templates.Base(templates.BaseProps{
+		Title:       "Forms",
+		CurrentPath: "/forms",
+	}) {
+		<h1>Form Components</h1>
+		<p>
+			pico_templ provides a comprehensive set of form components that integrate seamlessly with
+			Pico CSS styling. Each component supports validation states, accessibility attributes,
+			and HTMX integration where applicable.
+		</p>
+
+		<!-- Input Component -->
+		<section>
+			<h2>Input</h2>
+			<p>
+				The Input component renders a text input with optional label and helper text.
+				It supports various input types and validation states.
+			</p>
+
+			<h3>Basic Examples</h3>
+			<article>
+				@input.Input(input.Props{
+					Name:        "username",
+					Label:       "Username",
+					Placeholder: "Enter your username",
+				})
+				@input.Input(input.Props{
+					Name:        "email",
+					Type:        "email",
+					Label:       "Email Address",
+					Placeholder: "you@example.com",
+					HelperText:  "We'll never share your email.",
+				})
+			</article>
+
+			<h3>Input Types</h3>
+			<article>
+				<div class="grid">
+					<div>
+						@input.Input(input.Props{
+							Name:        "password",
+							Type:        "password",
+							Label:       "Password",
+							Placeholder: "Enter password",
+						})
+					</div>
+					<div>
+						@input.Input(input.Props{
+							Name:        "search",
+							Type:        "search",
+							Label:       "Search",
+							Placeholder: "Search...",
+						})
+					</div>
+				</div>
+				<div class="grid">
+					<div>
+						@input.Input(input.Props{
+							Name:  "date",
+							Type:  "date",
+							Label: "Date",
+						})
+					</div>
+					<div>
+						@input.Input(input.Props{
+							Name:  "number",
+							Type:  "number",
+							Label: "Number",
+							Value: "42",
+						})
+					</div>
+				</div>
+			</article>
+
+			<h3>Validation States</h3>
+			<article>
+				<div class="grid">
+					<div>
+						@input.Input(input.Props{
+							Name:       "valid-input",
+							Label:      "Valid Input",
+							Value:      "Correct value",
+							HelperText: "This field is valid",
+						})
+					</div>
+					<div>
+						@input.Input(input.Props{
+							Name:       "invalid-input",
+							Label:      "Invalid Input",
+							Value:      "Bad value",
+							Invalid:    true,
+							HelperText: "Please enter a valid value",
+						})
+					</div>
+				</div>
+				@input.Input(input.Props{
+					Name:        "disabled-input",
+					Label:       "Disabled Input",
+					Value:       "Cannot edit",
+					Disabled:    true,
+					HelperText:  "This field is disabled",
+				})
+			</article>
+
+			<h3>Code Example</h3>
+			<pre>
+				<code>
+					{ `// Props struct
+type Props struct {
+    Name        string           // Input name attribute
+    ID          string           // Input id (defaults to Name if empty)
+    Type        string           // text, email, password, number, etc.
+    Label       string           // Label text
+    Placeholder string
+    Value       string
+    Required    bool
+    Disabled    bool
+    ReadOnly    bool
+    Invalid     bool             // Adds aria-invalid="true"
+    HelperText  string           // Renders <small> below input
+    Class       string           // Additional CSS classes
+    Attrs       templ.Attributes // Additional attributes
+}
+
+// Usage
+@input.Input(input.Props{
+    Name:        "email",
+    Type:        "email",
+    Label:       "Email Address",
+    Placeholder: "you@example.com",
+    Required:    true,
+    HelperText:  "We'll never share your email.",
+})` }
+				</code>
+			</pre>
+		</section>
+
+		<!-- Textarea Component -->
+		<section>
+			<h2>Textarea</h2>
+			<p>
+				The Textarea component renders a multi-line text input with support for labels,
+				helper text, row configuration, and HTMX attributes.
+			</p>
+
+			<h3>Basic Examples</h3>
+			<article>
+				@textarea.Textarea(textarea.Props{
+					Name:        "message",
+					Label:       "Message",
+					Placeholder: "Enter your message...",
+					Rows:        4,
+				})
+				@textarea.Textarea(textarea.Props{
+					Name:        "bio",
+					Label:       "Biography",
+					Placeholder: "Tell us about yourself...",
+					Rows:        3,
+					HelperText:  "Maximum 500 characters",
+				})
+			</article>
+
+			<h3>Validation States</h3>
+			<article>
+				<div class="grid">
+					<div>
+						@textarea.Textarea(textarea.Props{
+							Name:       "valid-textarea",
+							Label:      "Valid Textarea",
+							Value:      "This content is valid.",
+							Rows:       3,
+						})
+					</div>
+					<div>
+						@textarea.Textarea(textarea.Props{
+							Name:       "invalid-textarea",
+							Label:      "Invalid Textarea",
+							Value:      "Error",
+							Rows:       3,
+							Invalid:    true,
+							HelperText: "Content is too short",
+						})
+					</div>
+				</div>
+				@textarea.Textarea(textarea.Props{
+					Name:     "disabled-textarea",
+					Label:    "Disabled Textarea",
+					Value:    "This content cannot be edited.",
+					Rows:     3,
+					Disabled: true,
+				})
+			</article>
+
+			<h3>Code Example</h3>
+			<pre>
+				<code>
+					{ `// Props struct
+type Props struct {
+    Name        string           // Field name
+    ID          string           // Element ID (defaults to Name)
+    Label       string           // Label text
+    Placeholder string           // Placeholder text
+    Value       string           // Initial value
+    Rows        int              // Number of visible rows
+    Required    bool             // Required field
+    Disabled    bool             // Disabled state
+    ReadOnly    bool             // Read-only state
+    Invalid     bool             // Invalid state (aria-invalid)
+    HelperText  string           // Helper text below textarea
+    Class       string           // Additional CSS classes
+    Htmx        attrs.HtmxAttrs  // HTMX attributes
+    Attrs       templ.Attributes // Additional attributes
+}
+
+// Usage
+@textarea.Textarea(textarea.Props{
+    Name:        "message",
+    Label:       "Message",
+    Placeholder: "Enter your message...",
+    Rows:        4,
+    Required:    true,
+})` }
+				</code>
+			</pre>
+		</section>
+
+		<!-- Select Component -->
+		<section>
+			<h2>Select</h2>
+			<p>
+				The Select component renders a dropdown with support for flat options,
+				option groups, placeholders, and validation states.
+			</p>
+
+			<h3>Basic Examples</h3>
+			<article>
+				@selectfield.Select(selectfield.Props{
+					Name:        "country",
+					ID:          "country",
+					Label:       "Country",
+					Placeholder: "Select a country...",
+					Options: []selectfield.Option{
+						{Value: "us", Label: "United States"},
+						{Value: "uk", Label: "United Kingdom"},
+						{Value: "ca", Label: "Canada"},
+						{Value: "au", Label: "Australia"},
+					},
+				})
+				@selectfield.Select(selectfield.Props{
+					Name:       "priority",
+					ID:         "priority",
+					Label:      "Priority",
+					HelperText: "Select the task priority",
+					Options: []selectfield.Option{
+						{Value: "low", Label: "Low"},
+						{Value: "medium", Label: "Medium", Selected: true},
+						{Value: "high", Label: "High"},
+					},
+				})
+			</article>
+
+			<h3>Option Groups</h3>
+			<article>
+				@selectfield.Select(selectfield.Props{
+					Name:        "car",
+					ID:          "car",
+					Label:       "Favorite Car",
+					Placeholder: "Select a car...",
+					OptGroups: []selectfield.OptGroup{
+						{
+							Label: "European",
+							Options: []selectfield.Option{
+								{Value: "bmw", Label: "BMW"},
+								{Value: "mercedes", Label: "Mercedes"},
+								{Value: "audi", Label: "Audi"},
+							},
+						},
+						{
+							Label: "Japanese",
+							Options: []selectfield.Option{
+								{Value: "toyota", Label: "Toyota"},
+								{Value: "honda", Label: "Honda"},
+								{Value: "nissan", Label: "Nissan"},
+							},
+						},
+					},
+				})
+			</article>
+
+			<h3>Validation States</h3>
+			<article>
+				<div class="grid">
+					<div>
+						@selectfield.Select(selectfield.Props{
+							Name:  "valid-select",
+							ID:    "valid-select",
+							Label: "Valid Select",
+							Options: []selectfield.Option{
+								{Value: "opt1", Label: "Option 1", Selected: true},
+								{Value: "opt2", Label: "Option 2"},
+							},
+						})
+					</div>
+					<div>
+						@selectfield.Select(selectfield.Props{
+							Name:       "invalid-select",
+							ID:         "invalid-select",
+							Label:      "Invalid Select",
+							Invalid:    true,
+							HelperText: "Please select an option",
+							Placeholder: "Select...",
+							Options: []selectfield.Option{
+								{Value: "opt1", Label: "Option 1"},
+								{Value: "opt2", Label: "Option 2"},
+							},
+						})
+					</div>
+				</div>
+				@selectfield.Select(selectfield.Props{
+					Name:     "disabled-select",
+					ID:       "disabled-select",
+					Label:    "Disabled Select",
+					Disabled: true,
+					Options: []selectfield.Option{
+						{Value: "opt1", Label: "Option 1", Selected: true},
+					},
+				})
+			</article>
+
+			<h3>Code Example</h3>
+			<pre>
+				<code>
+					{ `// Props struct
+type Props struct {
+    Name        string           // name attribute
+    ID          string           // id attribute
+    Label       string           // Label text above the select
+    Options     []Option         // Flat options
+    OptGroups   []OptGroup       // Grouped options
+    Placeholder string           // First disabled option
+    Required    bool             // required attribute
+    Disabled    bool             // disabled attribute
+    Invalid     bool             // Sets aria-invalid="true"
+    HelperText  string           // Helper text below the select
+    Class       string           // Additional CSS classes
+    Attrs       templ.Attributes // Additional attributes
+}
+
+type Option struct {
+    Value    string
+    Label    string
+    Selected bool
+    Disabled bool
+}
+
+type OptGroup struct {
+    Label   string
+    Options []Option
+}
+
+// Usage
+@selectfield.Select(selectfield.Props{
+    Name:        "country",
+    ID:          "country",
+    Label:       "Country",
+    Placeholder: "Select a country...",
+    Options: []selectfield.Option{
+        {Value: "us", Label: "United States"},
+        {Value: "uk", Label: "United Kingdom"},
+    },
+})` }
+				</code>
+			</pre>
+		</section>
+
+		<!-- Checkbox Component -->
+		<section>
+			<h2>Checkbox</h2>
+			<p>
+				The Checkbox component renders a checkbox input with an associated label.
+				It supports checked, disabled, and invalid states.
+			</p>
+
+			<h3>Basic Examples</h3>
+			<article>
+				@checkbox.Checkbox(checkbox.Props{
+					Name:  "terms",
+					ID:    "terms",
+					Label: "I agree to the terms and conditions",
+					Value: "accepted",
+				})
+				@checkbox.Checkbox(checkbox.Props{
+					Name:    "newsletter",
+					ID:      "newsletter",
+					Label:   "Subscribe to newsletter",
+					Value:   "yes",
+					Checked: true,
+				})
+			</article>
+
+			<h3>States</h3>
+			<article>
+				<div class="grid">
+					<div>
+						@checkbox.Checkbox(checkbox.Props{
+							Name:    "checked-box",
+							ID:      "checked-box",
+							Label:   "Checked checkbox",
+							Checked: true,
+						})
+					</div>
+					<div>
+						@checkbox.Checkbox(checkbox.Props{
+							Name:  "unchecked-box",
+							ID:    "unchecked-box",
+							Label: "Unchecked checkbox",
+						})
+					</div>
+				</div>
+				<div class="grid">
+					<div>
+						@checkbox.Checkbox(checkbox.Props{
+							Name:     "disabled-checked",
+							ID:       "disabled-checked",
+							Label:    "Disabled (checked)",
+							Checked:  true,
+							Disabled: true,
+						})
+					</div>
+					<div>
+						@checkbox.Checkbox(checkbox.Props{
+							Name:     "disabled-unchecked",
+							ID:       "disabled-unchecked",
+							Label:    "Disabled (unchecked)",
+							Disabled: true,
+						})
+					</div>
+				</div>
+				@checkbox.Checkbox(checkbox.Props{
+					Name:    "invalid-checkbox",
+					ID:      "invalid-checkbox",
+					Label:   "Invalid checkbox (must be checked)",
+					Invalid: true,
+				})
+			</article>
+
+			<h3>Code Example</h3>
+			<pre>
+				<code>
+					{ `// Props struct
+type Props struct {
+    Name     string           // Input name attribute
+    ID       string           // Input id attribute
+    Label    string           // Label text (required for accessibility)
+    Value    string           // Value when checked
+    Checked  bool             // Whether checkbox is checked
+    Disabled bool             // Whether checkbox is disabled
+    Invalid  bool             // Whether checkbox has validation error
+    Class    string           // Additional CSS classes
+    Attrs    templ.Attributes // Additional attributes
+}
+
+// Usage
+@checkbox.Checkbox(checkbox.Props{
+    Name:  "terms",
+    ID:    "terms",
+    Label: "I agree to the terms and conditions",
+    Value: "accepted",
+})` }
+				</code>
+			</pre>
+		</section>
+
+		<!-- Radio Component -->
+		<section>
+			<h2>Radio</h2>
+			<p>
+				The Radio component renders radio button inputs. Use individual Radio components
+				or the RadioGroup component for multiple related options.
+			</p>
+
+			<h3>Basic Examples</h3>
+			<article>
+				<fieldset>
+					<legend>Favorite Color</legend>
+					@radio.Radio(radio.Props{
+						Name:    "color",
+						ID:      "color-red",
+						Label:   "Red",
+						Value:   "red",
+						Checked: true,
+					})
+					@radio.Radio(radio.Props{
+						Name:  "color",
+						ID:    "color-green",
+						Label: "Green",
+						Value: "green",
+					})
+					@radio.Radio(radio.Props{
+						Name:  "color",
+						ID:    "color-blue",
+						Label: "Blue",
+						Value: "blue",
+					})
+				</fieldset>
+			</article>
+
+			<h3>Radio Group</h3>
+			<article>
+				<legend>Plan Selection</legend>
+				@radio.RadioGroup(radio.GroupProps{
+					Name: "plan",
+					Options: []radio.Props{
+						{ID: "plan-free", Label: "Free - $0/month", Value: "free"},
+						{ID: "plan-pro", Label: "Pro - $9/month", Value: "pro", Checked: true},
+						{ID: "plan-enterprise", Label: "Enterprise - $29/month", Value: "enterprise"},
+					},
+				})
+			</article>
+
+			<h3>States</h3>
+			<article>
+				<div class="grid">
+					<div>
+						<fieldset>
+							<legend>Enabled</legend>
+							@radio.Radio(radio.Props{
+								Name:    "enabled-radio",
+								ID:      "enabled-1",
+								Label:   "Option A",
+								Value:   "a",
+								Checked: true,
+							})
+							@radio.Radio(radio.Props{
+								Name:  "enabled-radio",
+								ID:    "enabled-2",
+								Label: "Option B",
+								Value: "b",
+							})
+						</fieldset>
+					</div>
+					<div>
+						<fieldset>
+							<legend>Disabled</legend>
+							@radio.Radio(radio.Props{
+								Name:     "disabled-radio",
+								ID:       "disabled-1",
+								Label:    "Option A",
+								Value:    "a",
+								Checked:  true,
+								Disabled: true,
+							})
+							@radio.Radio(radio.Props{
+								Name:     "disabled-radio",
+								ID:       "disabled-2",
+								Label:    "Option B",
+								Value:    "b",
+								Disabled: true,
+							})
+						</fieldset>
+					</div>
+				</div>
+				<fieldset>
+					<legend>Invalid</legend>
+					@radio.Radio(radio.Props{
+						Name:    "invalid-radio",
+						ID:      "invalid-1",
+						Label:   "Option A",
+						Value:   "a",
+						Invalid: true,
+					})
+					@radio.Radio(radio.Props{
+						Name:    "invalid-radio",
+						ID:      "invalid-2",
+						Label:   "Option B",
+						Value:   "b",
+						Invalid: true,
+					})
+				</fieldset>
+			</article>
+
+			<h3>Code Example</h3>
+			<pre>
+				<code>
+					{ `// Props struct (single radio)
+type Props struct {
+    Name     string           // Group name (shared across options)
+    ID       string           // Unique identifier
+    Label    string           // Display label text
+    Value    string           // Form value when selected
+    Checked  bool             // Whether this option is selected
+    Disabled bool             // Whether the radio is disabled
+    Invalid  bool             // Whether validation failed
+    Class    string           // Additional CSS classes
+    Attrs    templ.Attributes // Additional HTML attributes
+}
+
+// GroupProps struct (multiple radios)
+type GroupProps struct {
+    Name    string  // Group name (shared across all options)
+    Options []Props // Radio button options
+    Class   string  // Additional CSS classes for the fieldset
+}
+
+// Usage - Individual radios
+@radio.Radio(radio.Props{
+    Name:    "size",
+    ID:      "size-small",
+    Label:   "Small",
+    Value:   "small",
+    Checked: true,
+})
+
+// Usage - Radio group
+@radio.RadioGroup(radio.GroupProps{
+    Name: "plan",
+    Options: []radio.Props{
+        {ID: "plan-free", Label: "Free", Value: "free"},
+        {ID: "plan-pro", Label: "Pro", Value: "pro", Checked: true},
+    },
+})` }
+				</code>
+			</pre>
+		</section>
+
+		<!-- Switch Component -->
+		<section>
+			<h2>Switch</h2>
+			<p>
+				The Switch component renders a toggle switch using Pico CSS's switch pattern.
+				It's implemented as a checkbox with <code>role="switch"</code>.
+			</p>
+
+			<h3>Basic Examples</h3>
+			<article>
+				@switch_.Switch(switch_.Props{
+					Name:  "notifications",
+					ID:    "notifications",
+					Label: "Enable notifications",
+				})
+				@switch_.Switch(switch_.Props{
+					Name:    "dark-mode",
+					ID:      "dark-mode",
+					Label:   "Dark mode",
+					Checked: true,
+				})
+			</article>
+
+			<h3>States</h3>
+			<article>
+				<div class="grid">
+					<div>
+						@switch_.Switch(switch_.Props{
+							Name:  "switch-off",
+							ID:    "switch-off",
+							Label: "Off",
+						})
+					</div>
+					<div>
+						@switch_.Switch(switch_.Props{
+							Name:    "switch-on",
+							ID:      "switch-on",
+							Label:   "On",
+							Checked: true,
+						})
+					</div>
+				</div>
+				<div class="grid">
+					<div>
+						@switch_.Switch(switch_.Props{
+							Name:     "switch-disabled-off",
+							ID:       "switch-disabled-off",
+							Label:    "Disabled (off)",
+							Disabled: true,
+						})
+					</div>
+					<div>
+						@switch_.Switch(switch_.Props{
+							Name:     "switch-disabled-on",
+							ID:       "switch-disabled-on",
+							Label:    "Disabled (on)",
+							Checked:  true,
+							Disabled: true,
+						})
+					</div>
+				</div>
+			</article>
+
+			<h3>Code Example</h3>
+			<pre>
+				<code>
+					{ `// Props struct
+type Props struct {
+    Name     string           // Input name attribute
+    ID       string           // Input id attribute
+    Label    string           // Label text
+    Checked  bool             // Whether the switch is checked
+    Disabled bool             // Whether the switch is disabled
+    Class    string           // Additional CSS classes for the label
+    Attrs    templ.Attributes // Additional attributes for the input
+}
+
+// Usage
+@switch_.Switch(switch_.Props{
+    Name:    "notifications",
+    ID:      "notifications",
+    Label:   "Enable notifications",
+    Checked: true,
+})` }
+				</code>
+			</pre>
+		</section>
+
+		<!-- Range Component -->
+		<section>
+			<h2>Range</h2>
+			<p>
+				The Range component renders a slider input for selecting numeric values within a range.
+				It supports min, max, step, and initial value configuration.
+			</p>
+
+			<h3>Basic Examples</h3>
+			<article>
+				@rangecomp.Range(rangecomp.Props{
+					Name:  "volume",
+					ID:    "volume",
+					Label: "Volume",
+					Min:   0,
+					Max:   100,
+					Value: 50,
+				})
+				@rangecomp.Range(rangecomp.Props{
+					Name:  "brightness",
+					ID:    "brightness",
+					Label: "Brightness",
+					Min:   0,
+					Max:   100,
+					Value: 75,
+					Step:  5,
+				})
+			</article>
+
+			<h3>Different Ranges</h3>
+			<article>
+				@rangecomp.Range(rangecomp.Props{
+					Name:  "temperature",
+					ID:    "temperature",
+					Label: "Temperature (0-100)",
+					Min:   0,
+					Max:   100,
+					Value: 25,
+				})
+				@rangecomp.Range(rangecomp.Props{
+					Name:  "precision",
+					ID:    "precision",
+					Label: "Precision (0.0-1.0, step 0.1)",
+					Min:   0,
+					Max:   1,
+					Step:  0.1,
+					Value: 0.5,
+				})
+			</article>
+
+			<h3>States</h3>
+			<article>
+				@rangecomp.Range(rangecomp.Props{
+					Name:     "disabled-range",
+					ID:       "disabled-range",
+					Label:    "Disabled Range",
+					Min:      0,
+					Max:      100,
+					Value:    30,
+					Disabled: true,
+				})
+			</article>
+
+			<h3>Code Example</h3>
+			<pre>
+				<code>
+					{ `// Props struct
+type Props struct {
+    Name     string           // Input name attribute
+    ID       string           // Input id attribute
+    Label    string           // Label text
+    Min      float64          // Minimum value
+    Max      float64          // Maximum value
+    Step     float64          // Step increment
+    Value    float64          // Current value
+    Disabled bool             // Whether the input is disabled
+    Class    string           // Additional CSS classes
+    Attrs    templ.Attributes // Additional HTML attributes
+}
+
+// Usage
+@rangecomp.Range(rangecomp.Props{
+    Name:  "volume",
+    ID:    "volume",
+    Label: "Volume",
+    Min:   0,
+    Max:   100,
+    Value: 50,
+    Step:  5,
+})` }
+				</code>
+			</pre>
+		</section>
+
+		<!-- Complete Form Example -->
+		<section>
+			<h2>Complete Form Example</h2>
+			<p>
+				Here's an example combining multiple form components into a complete form.
+			</p>
+
+			<article>
+				<form>
+					<h3>User Registration</h3>
+
+					<div class="grid">
+						<div>
+							@input.Input(input.Props{
+								Name:        "first-name",
+								Label:       "First Name",
+								Placeholder: "John",
+								Required:    true,
+							})
+						</div>
+						<div>
+							@input.Input(input.Props{
+								Name:        "last-name",
+								Label:       "Last Name",
+								Placeholder: "Doe",
+								Required:    true,
+							})
+						</div>
+					</div>
+
+					@input.Input(input.Props{
+						Name:        "reg-email",
+						Type:        "email",
+						Label:       "Email",
+						Placeholder: "john.doe@example.com",
+						Required:    true,
+						HelperText:  "We'll never share your email with anyone else.",
+					})
+
+					@input.Input(input.Props{
+						Name:        "reg-password",
+						Type:        "password",
+						Label:       "Password",
+						Placeholder: "Enter a strong password",
+						Required:    true,
+						HelperText:  "Must be at least 8 characters.",
+					})
+
+					@selectfield.Select(selectfield.Props{
+						Name:        "reg-country",
+						ID:          "reg-country",
+						Label:       "Country",
+						Placeholder: "Select your country...",
+						Required:    true,
+						Options: []selectfield.Option{
+							{Value: "us", Label: "United States"},
+							{Value: "uk", Label: "United Kingdom"},
+							{Value: "ca", Label: "Canada"},
+							{Value: "au", Label: "Australia"},
+							{Value: "de", Label: "Germany"},
+							{Value: "fr", Label: "France"},
+						},
+					})
+
+					@textarea.Textarea(textarea.Props{
+						Name:        "reg-bio",
+						Label:       "Bio",
+						Placeholder: "Tell us a bit about yourself...",
+						Rows:        3,
+						HelperText:  "Optional. Maximum 500 characters.",
+					})
+
+					<fieldset>
+						<legend>Notification Preferences</legend>
+						@checkbox.Checkbox(checkbox.Props{
+							Name:    "notify-email",
+							ID:      "notify-email",
+							Label:   "Email notifications",
+							Checked: true,
+						})
+						@checkbox.Checkbox(checkbox.Props{
+							Name:  "notify-sms",
+							ID:    "notify-sms",
+							Label: "SMS notifications",
+						})
+					</fieldset>
+
+					<fieldset>
+						<legend>Account Type</legend>
+						@radio.RadioGroup(radio.GroupProps{
+							Name: "account-type",
+							Options: []radio.Props{
+								{ID: "type-personal", Label: "Personal", Value: "personal", Checked: true},
+								{ID: "type-business", Label: "Business", Value: "business"},
+								{ID: "type-developer", Label: "Developer", Value: "developer"},
+							},
+						})
+					</fieldset>
+
+					@switch_.Switch(switch_.Props{
+						Name:  "reg-marketing",
+						ID:    "reg-marketing",
+						Label: "Receive marketing emails",
+					})
+
+					@rangecomp.Range(rangecomp.Props{
+						Name:  "experience",
+						ID:    "experience",
+						Label: "Experience Level (1-10)",
+						Min:   1,
+						Max:   10,
+						Value: 5,
+						Step:  1,
+					})
+
+					@checkbox.Checkbox(checkbox.Props{
+						Name:  "reg-terms",
+						ID:    "reg-terms",
+						Label: "I agree to the terms and conditions",
+					})
+
+					<button type="submit">Create Account</button>
+				</form>
+			</article>
+
+			<h3>Form Code Example</h3>
+			<pre>
+				<code>
+					{ `// Import form components
+import (
+    "github.com/markopolo123/pico_templ/forms/input"
+    "github.com/markopolo123/pico_templ/forms/textarea"
+    selectfield "github.com/markopolo123/pico_templ/forms/select"
+    "github.com/markopolo123/pico_templ/forms/checkbox"
+    "github.com/markopolo123/pico_templ/forms/radio"
+    switch_ "github.com/markopolo123/pico_templ/forms/switch"
+    rangecomp "github.com/markopolo123/pico_templ/forms/range"
+)
+
+// Build a form with multiple components
+templ RegistrationForm() {
+    <form>
+        @input.Input(input.Props{
+            Name:     "email",
+            Type:     "email",
+            Label:    "Email",
+            Required: true,
+        })
+
+        @selectfield.Select(selectfield.Props{
+            Name:        "country",
+            Label:       "Country",
+            Placeholder: "Select...",
+            Options:     countryOptions,
+        })
+
+        @checkbox.Checkbox(checkbox.Props{
+            Name:  "terms",
+            Label: "I agree to terms",
+        })
+
+        <button type="submit">Submit</button>
+    </form>
+}` }
+				</code>
+			</pre>
+		</section>
+	}
+}

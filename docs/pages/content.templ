@@ -1,0 +1,714 @@
+package pages
+
+import (
+	"github.com/markopolo123/pico_templ/docs/templates"
+	"github.com/markopolo123/pico_templ/content/typography"
+	"github.com/markopolo123/pico_templ/content/table"
+	"github.com/markopolo123/pico_templ/content/link"
+	"github.com/markopolo123/pico_templ/content/loading"
+)
+
+templ contentStyles() {
+	<style>
+		.component-section {
+			margin-bottom: 3rem;
+			padding-bottom: 2rem;
+			border-bottom: 1px solid var(--pico-muted-border-color);
+		}
+
+		.component-section:last-child {
+			border-bottom: none;
+		}
+
+		.example-box {
+			padding: 1.5rem;
+			margin: 1rem 0;
+			border: 1px solid var(--pico-muted-border-color);
+			border-radius: var(--pico-border-radius);
+			background: var(--pico-card-background-color);
+		}
+
+		.example-box + pre {
+			margin-top: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		.code-block {
+			margin: 1rem 0;
+		}
+
+		.code-block pre {
+			margin: 0;
+			overflow-x: auto;
+		}
+
+		.props-table {
+			margin-top: 1rem;
+			font-size: 0.9rem;
+		}
+
+		.props-table code {
+			font-size: 0.85rem;
+		}
+
+		.loading-demo {
+			display: flex;
+			gap: 2rem;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		.link-examples {
+			display: flex;
+			gap: 1rem;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+	</style>
+}
+
+templ Content() {
+	@templates.Base(templates.BaseProps{Title: "Content", CurrentPath: "/content"}) {
+		@contentStyles()
+		<h1>Content Components</h1>
+		<p>
+			Content components provide styled elements for displaying text, data, and other content.
+			These components follow Pico CSS conventions and include Typography, Tables, Links, and Loading indicators.
+		</p>
+		<!-- Typography Section -->
+		<section class="component-section">
+			<h2>Typography</h2>
+			<p>
+				Typography components provide semantic heading and text elements with Pico CSS styling.
+				Use these for consistent text hierarchy throughout your application.
+			</p>
+			<h3>Headings</h3>
+			<p>The type scale provides six heading levels from H1 to H6.</p>
+			<div class="example-box">
+				@typography.H1(typography.HeadingProps{}) {
+					Heading 1
+				}
+				@typography.H2(typography.HeadingProps{}) {
+					Heading 2
+				}
+				@typography.H3(typography.HeadingProps{}) {
+					Heading 3
+				}
+				@typography.H4(typography.HeadingProps{}) {
+					Heading 4
+				}
+				@typography.H5(typography.HeadingProps{}) {
+					Heading 5
+				}
+				@typography.H6(typography.HeadingProps{}) {
+					Heading 6
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@typography.H1(typography.HeadingProps{}) {
+    Heading 1
+}
+@typography.H2(typography.HeadingProps{}) {
+    Heading 2
+}
+// ... H3, H4, H5, H6` }</code></pre>
+			</div>
+			<h3>Text Elements</h3>
+			<p>Various text styling components for inline content.</p>
+			<div class="example-box">
+				<p>This is a paragraph with <strong>strong text</strong>, <em>emphasized text</em>, <mark>highlighted text</mark>, and <small>small text</small>.</p>
+				<p>You can also show <del>deleted text</del> and <ins>inserted text</ins>.</p>
+				<p>Scientific notation: E = mc<sup>2</sup> and chemical formulas: H<sub>2</sub>O</p>
+				<p>Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.</p>
+				<p>The <abbr title="HyperText Markup Language">HTML</abbr> abbreviation shows a tooltip on hover.</p>
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@typography.P(typography.ParagraphProps{}) {
+    This is a paragraph with
+    @typography.Strong(typography.TextProps{}) { strong text }
+}
+
+@typography.Mark(typography.TextProps{}) { highlighted }
+@typography.Kbd(typography.TextProps{}) { Ctrl }
+@typography.Code(typography.TextProps{}) { inline code }
+@typography.Abbr("Full Title", typography.TextProps{}) { ABBR }` }</code></pre>
+			</div>
+			<h3>Blockquote</h3>
+			<div class="example-box">
+				@typography.Blockquote(typography.BlockquoteProps{Cite: "https://example.com"}) {
+					"The best way to predict the future is to invent it."
+					<footer>
+						<cite>Alan Kay</cite>
+					</footer>
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@typography.Blockquote(typography.BlockquoteProps{Cite: "https://example.com"}) {
+    "The best way to predict the future is to invent it."
+    <footer>
+        <cite>Alan Kay</cite>
+    </footer>
+}` }</code></pre>
+			</div>
+			<h3>Preformatted Text</h3>
+			<div class="example-box">
+				@typography.Pre(typography.TextProps{}) {
+					@typography.Code(typography.TextProps{}) {
+						{ `func main() {
+    fmt.Println("Hello, pico_templ!")
+}` }
+					}
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@typography.Pre(typography.TextProps{}) {
+    @typography.Code(typography.TextProps{}) {
+        { "func main() { ... }" }
+    }
+}` }</code></pre>
+			</div>
+			<h3>HeadingProps</h3>
+			<table class="props-table">
+				<thead>
+					<tr>
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>Class</code></td>
+						<td><code>string</code></td>
+						<td>Additional CSS classes</td>
+					</tr>
+					<tr>
+						<td><code>Attrs</code></td>
+						<td><code>templ.Attributes</code></td>
+						<td>Arbitrary additional attributes</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>TextProps</h3>
+			<table class="props-table">
+				<thead>
+					<tr>
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>Class</code></td>
+						<td><code>string</code></td>
+						<td>Additional CSS classes</td>
+					</tr>
+					<tr>
+						<td><code>Attrs</code></td>
+						<td><code>templ.Attributes</code></td>
+						<td>Arbitrary additional attributes</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<!-- Table Section -->
+		<section class="component-section">
+			<h2>Table</h2>
+			<p>
+				Table components provide structured data presentation with Pico CSS styling.
+				Tables support striped rows and standard HTML table structure.
+			</p>
+			<h3>Basic Table</h3>
+			<div class="example-box">
+				@table.Table(table.Props{}) {
+					@table.THead(table.HeadProps{}) {
+						@table.TR(table.RowProps{}) {
+							@table.TH(table.HeaderCellProps{Scope: "col"}) {
+								Name
+							}
+							@table.TH(table.HeaderCellProps{Scope: "col"}) {
+								Role
+							}
+							@table.TH(table.HeaderCellProps{Scope: "col"}) {
+								Status
+							}
+						}
+					}
+					@table.TBody(table.BodyProps{}) {
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								Alice Johnson
+							}
+							@table.TD(table.CellProps{}) {
+								Developer
+							}
+							@table.TD(table.CellProps{}) {
+								Active
+							}
+						}
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								Bob Smith
+							}
+							@table.TD(table.CellProps{}) {
+								Designer
+							}
+							@table.TD(table.CellProps{}) {
+								Active
+							}
+						}
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								Carol White
+							}
+							@table.TD(table.CellProps{}) {
+								Manager
+							}
+							@table.TD(table.CellProps{}) {
+								Away
+							}
+						}
+					}
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@table.Table(table.Props{}) {
+    @table.THead(table.HeadProps{}) {
+        @table.TR(table.RowProps{}) {
+            @table.TH(table.HeaderCellProps{Scope: "col"}) { Name }
+        }
+    }
+    @table.TBody(table.BodyProps{}) {
+        @table.TR(table.RowProps{}) {
+            @table.TD(table.CellProps{}) { Alice Johnson }
+        }
+    }
+}` }</code></pre>
+			</div>
+			<h3>Striped Table</h3>
+			<p>Use the Striped prop for alternating row colors.</p>
+			<div class="example-box">
+				@table.Table(table.Props{Striped: true}) {
+					@table.THead(table.HeadProps{}) {
+						@table.TR(table.RowProps{}) {
+							@table.TH(table.HeaderCellProps{Scope: "col"}) {
+								Product
+							}
+							@table.TH(table.HeaderCellProps{Scope: "col"}) {
+								Category
+							}
+							@table.TH(table.HeaderCellProps{Scope: "col"}) {
+								Price
+							}
+							@table.TH(table.HeaderCellProps{Scope: "col"}) {
+								Stock
+							}
+						}
+					}
+					@table.TBody(table.BodyProps{}) {
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								Laptop Pro
+							}
+							@table.TD(table.CellProps{}) {
+								Electronics
+							}
+							@table.TD(table.CellProps{}) {
+								$1,299
+							}
+							@table.TD(table.CellProps{}) {
+								45
+							}
+						}
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								Wireless Mouse
+							}
+							@table.TD(table.CellProps{}) {
+								Accessories
+							}
+							@table.TD(table.CellProps{}) {
+								$49
+							}
+							@table.TD(table.CellProps{}) {
+								230
+							}
+						}
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								USB-C Hub
+							}
+							@table.TD(table.CellProps{}) {
+								Accessories
+							}
+							@table.TD(table.CellProps{}) {
+								$79
+							}
+							@table.TD(table.CellProps{}) {
+								89
+							}
+						}
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								Monitor 27 inch
+							}
+							@table.TD(table.CellProps{}) {
+								Electronics
+							}
+							@table.TD(table.CellProps{}) {
+								$399
+							}
+							@table.TD(table.CellProps{}) {
+								12
+							}
+						}
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{}) {
+								Keyboard
+							}
+							@table.TD(table.CellProps{}) {
+								Accessories
+							}
+							@table.TD(table.CellProps{}) {
+								$129
+							}
+							@table.TD(table.CellProps{}) {
+								67
+							}
+						}
+					}
+					@table.TFoot(table.FootProps{}) {
+						@table.TR(table.RowProps{}) {
+							@table.TD(table.CellProps{Colspan: "3"}) {
+								Total Products: 5
+							}
+							@table.TD(table.CellProps{}) {
+								443 units
+							}
+						}
+					}
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@table.Table(table.Props{Striped: true}) {
+    // Table content...
+}` }</code></pre>
+			</div>
+			<h3>Table Props</h3>
+			<table class="props-table">
+				<thead>
+					<tr>
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>Striped</code></td>
+						<td><code>bool</code></td>
+						<td>Add striped rows styling</td>
+					</tr>
+					<tr>
+						<td><code>Class</code></td>
+						<td><code>string</code></td>
+						<td>Additional CSS classes</td>
+					</tr>
+					<tr>
+						<td><code>Attrs</code></td>
+						<td><code>templ.Attributes</code></td>
+						<td>Arbitrary additional attributes</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>HeaderCellProps (TH)</h3>
+			<table class="props-table">
+				<thead>
+					<tr>
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>Scope</code></td>
+						<td><code>string</code></td>
+						<td>Scope: col, row, colgroup, rowgroup</td>
+					</tr>
+					<tr>
+						<td><code>Colspan</code></td>
+						<td><code>string</code></td>
+						<td>Column span</td>
+					</tr>
+					<tr>
+						<td><code>Rowspan</code></td>
+						<td><code>string</code></td>
+						<td>Row span</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<!-- Link Section -->
+		<section class="component-section">
+			<h2>Link</h2>
+			<p>
+				Link components provide styled anchor elements with support for HTMX attributes,
+				external links with security attributes, and button-styled links.
+			</p>
+			<h3>Basic Links</h3>
+			<div class="example-box">
+				<div class="link-examples">
+					@link.Link(link.Props{Href: "#"}) {
+						Default Link
+					}
+					@link.Link(link.Props{Href: "#", Secondary: true}) {
+						Secondary Link
+					}
+					@link.Link(link.Props{Href: "#", Contrast: true}) {
+						Contrast Link
+					}
+				</div>
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@link.Link(link.Props{Href: "/page"}) {
+    Default Link
+}
+
+@link.Link(link.Props{Href: "/page", Secondary: true}) {
+    Secondary Link
+}` }</code></pre>
+			</div>
+			<h3>External Links</h3>
+			<p>External links automatically add target blank and rel noopener noreferrer for security.</p>
+			<div class="example-box">
+				@link.ExternalLink(link.Props{Href: "https://github.com/markopolo123/pico_templ"}) {
+					View on GitHub (opens in new tab)
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@link.ExternalLink(link.Props{Href: "https://github.com/markopolo123/pico_templ"}) {
+    View on GitHub (opens in new tab)
+}` }</code></pre>
+			</div>
+			<h3>Button Links</h3>
+			<p>Links styled as buttons using role button.</p>
+			<div class="example-box">
+				<div class="link-examples">
+					@link.ButtonLink(link.Props{Href: "#"}) {
+						Primary Button Link
+					}
+					@link.ButtonLink(link.Props{Href: "#", Secondary: true}) {
+						Secondary Button Link
+					}
+					@link.ButtonLink(link.Props{Href: "#", Contrast: true}) {
+						Contrast Button Link
+					}
+				</div>
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@link.ButtonLink(link.Props{Href: "/action"}) {
+    Primary Button Link
+}` }</code></pre>
+			</div>
+			<h3>HTMX Links</h3>
+			<p>Links with HTMX attributes for dynamic content loading.</p>
+			<div class="example-box">
+				@link.Link(link.Props{
+					Href:     "#",
+					HxGet:    "/api/content",
+					HxTarget: "#content",
+					HxSwap:   "innerHTML",
+				}) {
+					Load Content via HTMX
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@link.Link(link.Props{
+    Href:     "#",
+    HxGet:    "/api/content",
+    HxTarget: "#content",
+    HxSwap:   "innerHTML",
+}) {
+    Load Content via HTMX
+}` }</code></pre>
+			</div>
+			<h3>Link Props</h3>
+			<table class="props-table">
+				<thead>
+					<tr>
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>Href</code></td>
+						<td><code>string</code></td>
+						<td>URL to link to</td>
+					</tr>
+					<tr>
+						<td><code>Target</code></td>
+						<td><code>string</code></td>
+						<td>blank, self, parent, top</td>
+					</tr>
+					<tr>
+						<td><code>Secondary</code></td>
+						<td><code>bool</code></td>
+						<td>Use secondary color styling</td>
+					</tr>
+					<tr>
+						<td><code>Contrast</code></td>
+						<td><code>bool</code></td>
+						<td>Use contrast color styling</td>
+					</tr>
+					<tr>
+						<td><code>HxGet</code></td>
+						<td><code>string</code></td>
+						<td>HTMX hx-get attribute</td>
+					</tr>
+					<tr>
+						<td><code>HxTarget</code></td>
+						<td><code>string</code></td>
+						<td>HTMX hx-target attribute</td>
+					</tr>
+					<tr>
+						<td><code>HxSwap</code></td>
+						<td><code>string</code></td>
+						<td>HTMX hx-swap attribute</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<!-- Loading Section -->
+		<section class="component-section">
+			<h2>Loading</h2>
+			<p>
+				Loading components provide visual indicators for asynchronous operations.
+				Pico CSS uses aria-busy true to display loading spinners.
+			</p>
+			<h3>Spinner</h3>
+			<p>Basic loading spinner using a div element.</p>
+			<div class="example-box">
+				<div class="loading-demo">
+					@loading.Spinner(loading.Props{})
+				</div>
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@loading.Spinner(loading.Props{})` }</code></pre>
+			</div>
+			<h3>Inline Spinner</h3>
+			<p>Inline loading spinner using a span element, suitable for inline content.</p>
+			<div class="example-box">
+				<p>
+					Loading data
+					@loading.SpinnerInline(loading.Props{})
+				</p>
+			</div>
+			<div class="code-block">
+				<pre><code>{ `<p>
+    Loading data
+    @loading.SpinnerInline(loading.Props{})
+</p>` }</code></pre>
+			</div>
+			<h3>Loading Button</h3>
+			<p>Buttons that show a loading state when processing.</p>
+			<div class="example-box">
+				<div class="loading-demo">
+					@loading.LoadingButton(loading.ButtonProps{Text: "Submit", Loading: false})
+					@loading.LoadingButton(loading.ButtonProps{Text: "Processing...", Loading: true})
+					@loading.LoadingButton(loading.ButtonProps{Text: "Submit", Loading: true, Class: "secondary"})
+				</div>
+			</div>
+			<div class="code-block">
+				<pre><code>{ `// Normal state
+@loading.LoadingButton(loading.ButtonProps{Text: "Submit", Loading: false})
+
+// Loading state
+@loading.LoadingButton(loading.ButtonProps{Text: "Processing...", Loading: true})` }</code></pre>
+			</div>
+			<h3>Loading Article</h3>
+			<p>An article card with a loading indicator.</p>
+			<div class="example-box">
+				@loading.LoadingArticle(loading.Props{}) {
+					<p>Content is loading...</p>
+				}
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@loading.LoadingArticle(loading.Props{}) {
+    <p>Content is loading...</p>
+}` }</code></pre>
+			</div>
+			<h3>Loading Placeholder</h3>
+			<p>A placeholder element for content that is being loaded.</p>
+			<div class="example-box">
+				@loading.LoadingPlaceholder(loading.Props{})
+			</div>
+			<div class="code-block">
+				<pre><code>{ `@loading.LoadingPlaceholder(loading.Props{})` }</code></pre>
+			</div>
+			<h3>Props</h3>
+			<table class="props-table">
+				<thead>
+					<tr>
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>Size</code></td>
+						<td><code>string</code></td>
+						<td>Size variant: small, large (default is medium)</td>
+					</tr>
+					<tr>
+						<td><code>Class</code></td>
+						<td><code>string</code></td>
+						<td>Additional CSS classes</td>
+					</tr>
+					<tr>
+						<td><code>Attrs</code></td>
+						<td><code>templ.Attributes</code></td>
+						<td>Arbitrary additional attributes</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>ButtonProps (LoadingButton)</h3>
+			<table class="props-table">
+				<thead>
+					<tr>
+						<th>Prop</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>Loading</code></td>
+						<td><code>bool</code></td>
+						<td>Show loading spinner</td>
+					</tr>
+					<tr>
+						<td><code>Disabled</code></td>
+						<td><code>bool</code></td>
+						<td>Disabled state</td>
+					</tr>
+					<tr>
+						<td><code>Text</code></td>
+						<td><code>string</code></td>
+						<td>Button text (shown when not loading)</td>
+					</tr>
+					<tr>
+						<td><code>Class</code></td>
+						<td><code>string</code></td>
+						<td>Additional CSS classes</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	}
+}

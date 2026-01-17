@@ -1,0 +1,102 @@
+// Package loading provides loading indicator components for Pico CSS.
+package loading
+
+// Props contains properties for loading components.
+type Props struct {
+	Size  string           // Size variant: small, large (default is medium)
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// ButtonProps contains properties for a button with loading state.
+type ButtonProps struct {
+	Loading  bool             // Show loading spinner
+	Disabled bool             // Disabled state
+	Text     string           // Button text (shown when not loading)
+	Class    string           // Additional CSS classes
+	Attrs    templ.Attributes // Arbitrary additional attributes
+}
+
+// classes builds a space-separated class string.
+func classes(base string, additional string) string {
+	if additional == "" {
+		return base
+	}
+	if base == "" {
+		return additional
+	}
+	return base + " " + additional
+}
+
+// Spinner renders an aria-busy loading spinner.
+// In Pico CSS, any element with aria-busy="true" shows a loading spinner.
+templ Spinner(props Props) {
+	<div
+		aria-busy="true"
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	></div>
+}
+
+// SpinnerInline renders an inline loading spinner using a span.
+templ SpinnerInline(props Props) {
+	<span
+		aria-busy="true"
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	></span>
+}
+
+// LoadingButton renders a button that shows a spinner when in loading state.
+templ LoadingButton(props ButtonProps) {
+	<button
+		if props.Loading {
+			aria-busy="true"
+		}
+		if props.Disabled || props.Loading {
+			disabled
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		if !props.Loading && props.Text != "" {
+			{ props.Text }
+		} else if !props.Loading {
+			{ children... }
+		}
+	</button>
+}
+
+// LoadingArticle renders an article card with a loading state.
+templ LoadingArticle(props Props) {
+	<article
+		aria-busy="true"
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</article>
+}
+
+// LoadingPlaceholder renders a placeholder element that indicates content is loading.
+templ LoadingPlaceholder(props Props) {
+	<div
+		aria-busy="true"
+		role="status"
+		aria-label="Loading content"
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		<span class="visually-hidden">Loading...</span>
+	</div>
+}

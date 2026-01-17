@@ -1,0 +1,160 @@
+// Package table provides table components for Pico CSS.
+package table
+
+// Props contains properties for the Table component.
+type Props struct {
+	Striped bool             // Add striped rows styling
+	Class   string           // Additional CSS classes
+	Attrs   templ.Attributes // Arbitrary additional attributes
+}
+
+// HeadProps contains properties for the table header.
+type HeadProps struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// BodyProps contains properties for the table body.
+type BodyProps struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// FootProps contains properties for the table footer.
+type FootProps struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// RowProps contains properties for table rows.
+type RowProps struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// CellProps contains properties for table cells.
+type CellProps struct {
+	Colspan string           // Column span
+	Rowspan string           // Row span
+	Class   string           // Additional CSS classes
+	Attrs   templ.Attributes // Arbitrary additional attributes
+}
+
+// HeaderCellProps contains properties for table header cells.
+type HeaderCellProps struct {
+	Scope   string           // Scope: col, row, colgroup, rowgroup
+	Colspan string           // Column span
+	Rowspan string           // Row span
+	Class   string           // Additional CSS classes
+	Attrs   templ.Attributes // Arbitrary additional attributes
+}
+
+// classes builds a space-separated class string.
+func classes(base string, additional string) string {
+	if additional == "" {
+		return base
+	}
+	if base == "" {
+		return additional
+	}
+	return base + " " + additional
+}
+
+// Table renders a table element with optional striped styling.
+templ Table(props Props) {
+	<table
+		if props.Striped || props.Class != "" {
+			class={ classes(func() string { if props.Striped { return "striped" }; return "" }(), props.Class) }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</table>
+}
+
+// THead renders a table header section.
+templ THead(props HeadProps) {
+	<thead
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</thead>
+}
+
+// TBody renders a table body section.
+templ TBody(props BodyProps) {
+	<tbody
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</tbody>
+}
+
+// TFoot renders a table footer section.
+templ TFoot(props FootProps) {
+	<tfoot
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</tfoot>
+}
+
+// TR renders a table row.
+templ TR(props RowProps) {
+	<tr
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</tr>
+}
+
+// TH renders a table header cell.
+templ TH(props HeaderCellProps) {
+	<th
+		if props.Scope != "" {
+			scope={ props.Scope }
+		}
+		if props.Colspan != "" {
+			colspan={ props.Colspan }
+		}
+		if props.Rowspan != "" {
+			rowspan={ props.Rowspan }
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</th>
+}
+
+// TD renders a table data cell.
+templ TD(props CellProps) {
+	<td
+		if props.Colspan != "" {
+			colspan={ props.Colspan }
+		}
+		if props.Rowspan != "" {
+			rowspan={ props.Rowspan }
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</td>
+}
