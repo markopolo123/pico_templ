@@ -1,0 +1,52 @@
+// Package card provides Card layout components for Pico CSS.
+package card
+
+// Props contains properties for the Card component.
+type Props struct {
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// HeaderProps contains properties for the CardHeader component.
+type HeaderProps struct {
+	Class string // Additional CSS classes
+}
+
+// FooterProps contains properties for the CardFooter component.
+type FooterProps struct {
+	Class string // Additional CSS classes
+}
+
+// Card renders a card container using <article>.
+templ Card(props Props) {
+	<article
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		{ props.Attrs... }
+	>
+		{ children... }
+	</article>
+}
+
+// CardHeader renders a header section inside a card.
+templ CardHeader(props HeaderProps) {
+	<header
+		if props.Class != "" {
+			class={ props.Class }
+		}
+	>
+		{ children... }
+	</header>
+}
+
+// CardFooter renders a footer section inside a card.
+templ CardFooter(props FooterProps) {
+	<footer
+		if props.Class != "" {
+			class={ props.Class }
+		}
+	>
+		{ children... }
+	</footer>
+}
