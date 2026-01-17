@@ -3,6 +3,7 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
+        exclude: '^\.flox/'
       - id: end-of-file-fixer
         exclude: '^\.flox/'
       - id: check-yaml
