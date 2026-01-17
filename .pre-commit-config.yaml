@@ -8,15 +8,27 @@ repos:
       - id: check-added-large-files
       - id: check-merge-conflict
 
-  - repo: https://github.com/dnephin/pre-commit-golang
-    rev: v0.5.1
-    hooks:
-      - id: go-fmt
-      - id: go-imports
-      - id: go-vet
-
   - repo: local
     hooks:
+      - id: go-fmt
+        name: go fmt
+        entry: flox activate -- gofmt -w
+        language: system
+        types: [go]
+
+      - id: go-imports
+        name: go imports
+        entry: flox activate -- goimports -w
+        language: system
+        types: [go]
+
+      - id: go-vet
+        name: go vet
+        entry: flox activate -- go vet ./...
+        language: system
+        types: [go]
+        pass_filenames: false
+
       - id: templ-fmt
         name: templ fmt
         entry: flox activate -- templ fmt .

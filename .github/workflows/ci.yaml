@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Install Flox
-        uses: flox/install-flox-action@bdb1ae4896548269e6ee2019dd8bf48f87477a34 # v3
+        uses: flox/install-flox-action@e3e10c1a9c83c2caa23418edfbb3cee2cbece59f # v2.2.0
 
       - name: Run pre-commit
         run: flox activate -- prek run --all-files
