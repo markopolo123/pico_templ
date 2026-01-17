@@ -120,13 +120,13 @@ templ Page() {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></section><!-- Component Links Section --> <section><h2>Explore Components</h2><p>Browse the component library to see all available components with live examples:</p><div class=\"section-links\"><a href=\"/components\" role=\"button\">Components</a> <a href=\"/forms\" role=\"button\" class=\"secondary\">Forms</a> <a href=\"/layout\" role=\"button\" class=\"secondary\">Layout</a> <a href=\"/content\" role=\"button\" class=\"secondary\">Content</a></div></section>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</code></pre></section><!-- Component Links Section --> <section><h2>Explore Components</h2><p>Browse the component library to see all available components with live examples:</p><div class=\"section-links\"><a href=\"/pico_templ/components.html\" role=\"button\">Components</a> <a href=\"/pico_templ/forms.html\" role=\"button\" class=\"secondary\">Forms</a> <a href=\"/pico_templ/layout.html\" role=\"button\" class=\"secondary\">Layout</a> <a href=\"/pico_templ/content.html\" role=\"button\" class=\"secondary\">Content</a></div></section>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = templates.Base(templates.BaseProps{Title: "pico_templ - Go Templ Components for Pico CSS", CurrentPath: "/"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Base(templates.BaseProps{Title: "pico_templ - Go Templ Components for Pico CSS", CurrentPath: "/pico_templ/"}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

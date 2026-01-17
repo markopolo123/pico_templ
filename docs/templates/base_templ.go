@@ -10,6 +10,9 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "github.com/markopolo123/pico_templ/head"
 
+// BasePath is the URL base path for GitHub Pages deployment
+const BasePath = "/pico_templ"
+
 // NavItem represents a navigation link
 type NavItem struct {
 	Title string
@@ -24,11 +27,11 @@ type BaseProps struct {
 
 // Navigation items for the sidebar
 var navItems = []NavItem{
-	{Title: "Home", Path: "/"},
-	{Title: "Components", Path: "/components.html"},
-	{Title: "Forms", Path: "/forms.html"},
-	{Title: "Layout", Path: "/layout.html"},
-	{Title: "Content", Path: "/content.html"},
+	{Title: "Home", Path: "/pico_templ/"},
+	{Title: "Components", Path: "/pico_templ/components.html"},
+	{Title: "Forms", Path: "/pico_templ/forms.html"},
+	{Title: "Layout", Path: "/pico_templ/layout.html"},
+	{Title: "Content", Path: "/pico_templ/content.html"},
 }
 
 // isCurrentPage checks if the given path is the current page
@@ -147,7 +150,7 @@ func Base(props BaseProps) templ.Component {
 				var templ_7745c5c3_Var4 templ.SafeURL
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(item.Path))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 236, Col: 44}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 239, Col: 44}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -160,7 +163,7 @@ func Base(props BaseProps) templ.Component {
 				var templ_7745c5c3_Var5 string
 				templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 236, Col: 79}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 239, Col: 79}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 				if templ_7745c5c3_Err != nil {
@@ -178,7 +181,7 @@ func Base(props BaseProps) templ.Component {
 				var templ_7745c5c3_Var6 templ.SafeURL
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinURLErrs(templ.SafeURL(item.Path))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 238, Col: 44}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 241, Col: 44}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -191,7 +194,7 @@ func Base(props BaseProps) templ.Component {
 				var templ_7745c5c3_Var7 string
 				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(item.Title)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 238, Col: 59}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `docs/templates/base.templ`, Line: 241, Col: 59}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 				if templ_7745c5c3_Err != nil {
