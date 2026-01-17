@@ -1,0 +1,127 @@
+// Package modal provides Modal components using Pico CSS dialog and _hyperscript.
+package modal
+
+// Props configures the main Modal dialog component.
+type Props struct {
+	ID    string           // Required - used for targeting
+	Open  bool             // Initial open state
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Additional attributes
+}
+
+// HeaderProps configures the ModalHeader component.
+type HeaderProps struct {
+	Title     string // Modal title in header
+	ShowClose bool   // Show X close button (default true when Title set)
+}
+
+// FooterProps configures the ModalFooter component.
+type FooterProps struct {
+	Class string // Additional CSS classes
+}
+
+// TriggerProps configures the ModalTrigger button component.
+type TriggerProps struct {
+	ModalID string // ID of modal to open (without #)
+	Text    string // Button text
+	Variant string // Button variant (secondary, contrast, outline)
+	Class   string // Additional CSS classes
+}
+
+// CloseProps configures the ModalClose button component.
+type CloseProps struct {
+	ModalID string // ID of modal to close (without #)
+	Text    string // Button text
+	Variant string // Button variant (secondary, contrast, outline)
+	Class   string // Additional CSS classes
+}
+
+// classes builds a space-separated class string.
+func classes(base string, additional string) string {
+	if additional == "" {
+		return base
+	}
+	if base == "" {
+		return additional
+	}
+	return base + " " + additional
+}
+
+// Modal renders a Pico CSS dialog element with _hyperscript for click-outside-to-close.
+templ Modal(props Props) {
+	<dialog
+		id={ props.ID }
+		if props.Open {
+			open
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+		_={ "on click if event.target === me call me.close()" }
+		{ props.Attrs... }
+	>
+		<article>
+			{ children... }
+		</article>
+	</dialog>
+}
+
+// ModalHeader renders a header with optional title and close button.
+templ ModalHeader(props HeaderProps) {
+	<header>
+		if props.ShowClose || props.Title != "" {
+			<button aria-label="Close" rel="prev" _={ "on click call closest <dialog/>.close()" }></button>
+		}
+		if props.Title != "" {
+			<p><strong>{ props.Title }</strong></p>
+		}
+		{ children... }
+	</header>
+}
+
+// ModalFooter renders a footer section for action buttons.
+templ ModalFooter(props FooterProps) {
+	<footer
+		if props.Class != "" {
+			class={ props.Class }
+		}
+	>
+		{ children... }
+	</footer>
+}
+
+// ModalTrigger renders a button that opens the specified modal via _hyperscript.
+templ ModalTrigger(props TriggerProps) {
+	<button
+		if props.Class != "" || props.Variant != "" {
+			class={ classes(props.Variant, props.Class) }
+		}
+		_={ "on click call #" + props.ModalID + ".showModal()" }
+	>
+		if props.Text != "" {
+			{ props.Text }
+		} else {
+			{ children... }
+		}
+	</button>
+}
+
+// ModalClose renders a button that closes the specified modal via _hyperscript.
+templ ModalClose(props CloseProps) {
+	<button
+		if props.Class != "" || props.Variant != "" {
+			class={ classes(props.Variant, props.Class) }
+		}
+		if props.ModalID != "" {
+			_={ "on click call #" + props.ModalID + ".close()" }
+		} else {
+			_={ "on click call closest <dialog/>.close()" }
+		}
+	>
+		if props.Text != "" {
+			{ props.Text }
+		} else {
+			{ children... }
+		}
+	</button>
+}
