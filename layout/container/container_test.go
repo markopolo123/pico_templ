@@ -71,8 +71,8 @@ func TestContainer_FluidWithCustomClasses(t *testing.T) {
 func TestContainer_AttrsSpreadIntoElement(t *testing.T) {
 	html := render(t, Container(Props{
 		Attrs: templ.Attributes{
-			"id":           "main-container",
-			"data-testid":  "container",
+			"id":          "main-container",
+			"data-testid": "container",
 		},
 	}))
 
