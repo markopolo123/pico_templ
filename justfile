@@ -1,4 +1,6 @@
-# pico_templ - Pico CSS component library for templ
+# https://just.systems
+
+set shell := ["flox", "activate", "--", "bash", "-c"]
 
 default:
     @just --list
