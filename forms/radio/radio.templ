@@ -1,0 +1,81 @@
+// Package radio provides a Radio button component styled with Pico CSS.
+package radio
+
+// Props defines the properties for a single radio button.
+type Props struct {
+	Name     string           // Group name (shared across options)
+	ID       string           // Unique identifier
+	Label    string           // Display label text
+	Value    string           // Form value when selected
+	Checked  bool             // Whether this option is selected
+	Disabled bool             // Whether the radio is disabled
+	Invalid  bool             // Whether validation failed
+	Class    string           // Additional CSS classes
+	Attrs    templ.Attributes // Additional HTML attributes
+}
+
+// GroupProps defines the properties for rendering multiple radios together.
+type GroupProps struct {
+	Name    string  // Group name (shared across all options)
+	Options []Props // Radio button options
+	Class   string  // Additional CSS classes for the fieldset
+}
+
+// Radio renders a single radio button with label.
+templ Radio(props Props) {
+	<label
+		if props.Disabled {
+			aria-disabled="true"
+		}
+		if props.Class != "" {
+			class={ props.Class }
+		}
+	>
+		<input
+			type="radio"
+			if props.Name != "" {
+				name={ props.Name }
+			}
+			if props.ID != "" {
+				id={ props.ID }
+			}
+			if props.Value != "" {
+				value={ props.Value }
+			}
+			if props.Checked {
+				checked
+			}
+			if props.Disabled {
+				disabled
+			}
+			if props.Invalid {
+				aria-invalid="true"
+			}
+			{ props.Attrs... }
+		/>
+		{ props.Label }
+	</label>
+}
+
+// RadioGroup renders multiple radio buttons within a fieldset.
+templ RadioGroup(props GroupProps) {
+	<fieldset
+		if props.Class != "" {
+			class={ props.Class }
+		}
+	>
+		for _, opt := range props.Options {
+			@Radio(Props{
+				Name:     props.Name,
+				ID:       opt.ID,
+				Label:    opt.Label,
+				Value:    opt.Value,
+				Checked:  opt.Checked,
+				Disabled: opt.Disabled,
+				Invalid:  opt.Invalid,
+				Class:    opt.Class,
+				Attrs:    opt.Attrs,
+			})
+		}
+	</fieldset>
+}
