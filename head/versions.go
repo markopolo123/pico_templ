@@ -9,8 +9,8 @@ const (
 
 // AssetHashes contains expected SHA256 hashes for integrity verification.
 var AssetHashes = map[string]string{
-	"pico.min.css":        "fbc9a63fc9fc9f72d12fd7fc9806e11fa9f77ae4f9cad146b27003a1119ba3db",
-	"htmx.min.js":         "e209dda5c8235479f3166defc7750e1dbcd5a5c1808b7792fc2e6733768fb447",
+	"pico.min.css":        "d909404e60ea5ddec11a48b55292f110f713c6c30ab4d9b9bfaa0f31f363ca6f",
+	"htmx.min.js":         "69caefd0da92269066e725d7fe175e26b9d50c962e3056459c0c477154cdb9d3",
 	"_hyperscript.min.js": "3e834a3ffc0334fee54ecff4e37a6ae951cd83e6daa96651ca7cfd8f751ad4d2",
 }
 
