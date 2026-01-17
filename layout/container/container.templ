@@ -1,0 +1,30 @@
+// Package container provides the Container layout component for Pico CSS.
+package container
+
+import "strings"
+
+// Props defines the properties for the Container component.
+type Props struct {
+	Fluid bool             // Use .container-fluid for full-width
+	Class string           // Additional CSS classes
+	Attrs templ.Attributes // Arbitrary additional attributes
+}
+
+// containerClass returns the appropriate container class based on props.
+func containerClass(p Props) string {
+	base := "container"
+	if p.Fluid {
+		base = "container-fluid"
+	}
+	if p.Class != "" {
+		return base + " " + strings.TrimSpace(p.Class)
+	}
+	return base
+}
+
+// Container renders a Pico CSS container element.
+templ Container(props Props) {
+	<div class={ containerClass(props) } { props.Attrs... }>
+		{ children... }
+	</div>
+}
